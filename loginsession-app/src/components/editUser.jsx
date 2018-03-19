@@ -18,9 +18,9 @@ class DocumentInput extends Component {
 
   onFieldChange(event) {
         // for a regular input field, read field name and value from the event
-        const fieldName = event.target.name;
-        const fieldValue = event.target.value;
-        const htmldata = event.target;
+        let fieldName = event.target.name;
+        let fieldValue = event.target.value;
+        let htmldata = event.target;
         this.props.dynamictextChange(fieldName,fieldValue);
     }
 
@@ -66,6 +66,9 @@ class EditUser extends Component
     this.removeElement = this.removeElement.bind(this);
     this.dynamictextChange = this.dynamictextChange.bind(this);
     this.getmenuList = this.getmenuList.bind(this);
+    this.handleduplicatevalueValidation = this.handleduplicatevalueValidation.bind(this);
+    this.handlesubmenuvalueValiadtion = this.handlesubmenuvalueValiadtion.bind(this);
+
   }
 
 
@@ -519,50 +522,126 @@ class EditUser extends Component
     let n_inputValuesList1=this.state.inputvaluesList1;
     let n_inputValuesList2=this.state.inputvaluesList2;
     let n_inputValuesList3=this.state.inputvaluesList3;
+
     if(name.startsWith("submenu1"))
     {
+
       let inputValues1= this.state.inputValues1;
       let inputvaluesList1=[];
       let new_list1=[];
-      inputValues1[name]=value
-      inputvaluesList1.push(inputValues1)
+      let documents1=this.state.documents1;
+      if(name in n_inputValuesList1[0])
+      {
+        n_inputValuesList1[0][name]=value
+        inputValues1[name] = n_inputValuesList1[0][name]
+        inputvaluesList1.push(inputValues1)
+      }
+      else
+      {
+        inputValues1[name]=value
+        inputvaluesList1.push(inputValues1)
+      }
       let test1 = inputvaluesList1.concat(n_inputValuesList1)
-      new_list1.push(test1.reduce(function(acc, x) {
-          for (var key in x) acc[key] = x[key];
-          return acc;
-        }, {}));
-      this.setState({inputValues1: inputValues1 ,
-                    inputvaluesList1:new_list1})
+      if(test1.length>0)
+      {
+        new_list1.push(test1.reduce(function(acc, x) {
+            for (var key in x) acc[key] = x[key];
+            return acc;
+          }, {}));
+      }
+      else
+      {
+        new_list1 = test1
+      }
+
+      let commentIndex = documents1.findIndex(valuelist => valuelist['props'].name==name);
+      let updatedComment = update(documents1[commentIndex], {props:{value: {$set:value}}});
+      let newData = update(documents1, {
+          $splice: [[commentIndex, 1, updatedComment]]
+      });
+
+      this.setState({inputValues1: inputValues1 ,inputvaluesList1:new_list1,documents1: newData})
+
     }
     if(name.startsWith("submenu2"))
     {
           let inputValues2= this.state.inputValues2;
           let inputvaluesList2=[];
           let new_list2=[];
-          inputValues2[name]=value
-          inputvaluesList2.push(inputValues2)
+          let documents2=this.state.documents2;
+          if(name in n_inputValuesList2[0])
+          {
+            n_inputValuesList2[0][name]=value
+            inputValues2[name] = n_inputValuesList2[0][name]
+            inputvaluesList2.push(inputValues2)
+          }
+          else
+          {
+            inputValues2[name]=value
+            inputvaluesList2.push(inputValues2)
+          }
           let test2 = inputvaluesList2.concat(n_inputValuesList2)
-          new_list2.push(test2.reduce(function(acc, x) {
-              for (var key in x) acc[key] = x[key];
-              return acc;
-            }, {}));
-          this.setState({inputValues2: inputValues2 ,
-                        inputvaluesList2:new_list2})
+          if(test2.length>0)
+          {
+            new_list2.push(test2.reduce(function(acc, x) {
+                for (var key in x) acc[key] = x[key];
+                return acc;
+              }, {}));
+          }
+          else
+          {
+            new_list2 = test2
+          }
+
+          let commentIndex = documents2.findIndex(valuelist => valuelist['props'].name==name);
+          let updatedComment = update(documents2[commentIndex], {props:{value: {$set:value}}});
+          let newData = update(documents2, {
+              $splice: [[commentIndex, 1, updatedComment]]
+          });
+
+          this.setState({inputValues2: inputValues2 ,inputvaluesList2:new_list2,documents2: newData})
+
+
+
     }
     if(name.startsWith("submenu3"))
     {
       let inputValues3= this.state.inputValues3;
       let inputvaluesList3=[];
       let new_list3=[];
-      inputValues3[name]=value
-      inputvaluesList3.push(inputValues3)
+      let documents3=this.state.documents3;
+
+      if(name in n_inputValuesList3[0])
+      {
+        n_inputValuesList3[0][name]=value
+        inputValues3[name] = n_inputValuesList3[0][name]
+        inputvaluesList3.push(inputValues3)
+      }
+      else
+      {
+        inputValues3[name]=value
+        inputvaluesList3.push(inputValues3)
+      }
       let test3 = inputvaluesList3.concat(n_inputValuesList3)
-      new_list3.push(test3.reduce(function(acc, x) {
-          for (var key in x) acc[key] = x[key];
-          return acc;
-        }, {}));
-      this.setState({inputValues3: inputValues3 ,
-                    inputvaluesList3:new_list3})
+      if(test3.length>0)
+      {
+        new_list3.push(test3.reduce(function(acc, x) {
+            for (var key in x) acc[key] = x[key];
+            return acc;
+          }, {}));
+      }
+      else
+      {
+        new_list3 = test3
+      }
+
+      let commentIndex = documents3.findIndex(valuelist => valuelist['props'].name==name);
+      let updatedComment = update(documents3[commentIndex], {props:{value: {$set:value}}});
+      let newData = update(documents3, {
+          $splice: [[commentIndex, 1, updatedComment]]
+      });
+
+      this.setState({inputValues3: inputValues3 ,inputvaluesList3:new_list3,documents3: newData})
     }
   }
 
@@ -574,17 +653,17 @@ class EditUser extends Component
       let target_id=c.id
       if(target_id==="Menu1_lists")
       {
-        const documents1 = this.state.documents1.concat(DocumentInput);
+        let documents1 = this.state.documents1.concat(DocumentInput);
         this.setState({documents1: documents1});
       }
       if(target_id==="Menu2_lists")
       {
-        const documents2 = this.state.documents2.concat(DocumentInput);
+        let documents2 = this.state.documents2.concat(DocumentInput);
         this.setState({documents2: documents2});
       }
       if(target_id==="Menu3_lists")
       {
-        const documents3 = this.state.documents3.concat(DocumentInput);
+        let documents3 = this.state.documents3.concat(DocumentInput);
         this.setState({documents3: documents3});
       }
 
@@ -643,27 +722,27 @@ class EditUser extends Component
 
   displaysubmenus(index)
   {
-    const documents1 = this.state.documents1.map((valueslist,index) => {
+    let documents1 = this.state.documents1.map((valueslist,index) => {
       if(valueslist['props'])
       {
-        console.log('aliueee')
         for (let [key, value, index] of Object.entries(valueslist)) {
             return(<DocumentInput  index={ valueslist.props.index } removeElement={this.removeElement}  addElement={this.addElement}
                                   name={valueslist.props.name} dynamictextChange ={this.dynamictextChange} value={valueslist.props.value} />)
             }
       }
       else {
-          const name = `submenu1-${index}`
+          let name = `submenu1-${index}`
           return (<DocumentInput  index={ index } removeElement={this.removeElement}  addElement={this.addElement}
                                   dynamictextChange ={this.dynamictextChange} name={name}  />)
 
       }
     });
 
-    const documents2 = this.state.documents2.map((valueslist,index) =>
+    let documents2 = this.state.documents2.map((valueslist,index) =>
     {
       if(valueslist['props'])
       {
+
         for (let [key, value, index] of Object.entries(valueslist)) {
 
                return(<DocumentInput  index={ valueslist.props.index } removeElement={this.removeElement}  addElement={this.addElement}
@@ -672,14 +751,14 @@ class EditUser extends Component
       }
       else
       {
-        const name = `submenu2-${index}`
+        let name = `submenu2-${index}`
         return (<DocumentInput  index={ index } removeElement={this.removeElement}  addElement={this.addElement}
                    dynamictextChange ={this.dynamictextChange}  name={name}/>)
 
       }
     });
 
-    const documents3 = this.state.documents3.map((valueslist,index) => {
+    let documents3 = this.state.documents3.map((valueslist,index) => {
       if(valueslist['props'])
       {
         for (let [key, value, index] of Object.entries(valueslist)) {
@@ -691,7 +770,7 @@ class EditUser extends Component
       }
       else {
 
-        const name = `submenu3-${index}`
+        let name = `submenu3-${index}`
         return (<DocumentInput  index={ index } removeElement={this.removeElement}  addElement={this.addElement}
                    dynamictextChange ={this.dynamictextChange} name={name}/>)
       }
@@ -738,7 +817,7 @@ class EditUser extends Component
                           <input type="checkbox"  checked={item.checked} onClick={(e)=>this.updateStateList(e,item,i)} />   {item.text}
 
                           {item.checked?<div ref={item.text+'_lists'} id={item.text+'_lists'} name={item.text+'_submenus'}>{this.getmenuList(i)}
-                  <span style={{color: "red"}}>
+                            <span style={{color: "red"}}>
                     {this.state.errors[item.text+'_submenus']}</span></div>:<div></div>}
 
                         </li>
@@ -771,8 +850,8 @@ export default withRouter(connect(mapStateToProps,{edit_user})(EditUser));
 
 
 // export default withRouter(connect((state) => {
-//   const users = state.usersReducer
-//   const loginReducer = state.loginReducer
+//   let users = state.usersReducer
+//   let loginReducer = state.loginReducer
 
 //   return {
 //       users,loginReducer
