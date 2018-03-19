@@ -525,19 +525,22 @@ class EditUser extends Component
 
     if(name.startsWith("submenu1"))
     {
-
-      let inputValues1= this.state.inputValues1;
-      let inputvaluesList1=[];
+      debugger;
+      let inputValues1={};
       let new_list1=[];
       let documents1=this.state.documents1;
+      let inputvaluesList1=[];
+
       if(name in n_inputValuesList1[0])
       {
+        inputvaluesList1=[];
         n_inputValuesList1[0][name]=value
         inputValues1[name] = n_inputValuesList1[0][name]
         inputvaluesList1.push(inputValues1)
       }
       else
       {
+        inputvaluesList1=[];
         inputValues1[name]=value
         inputvaluesList1.push(inputValues1)
       }
@@ -579,18 +582,21 @@ class EditUser extends Component
     }
     if(name.startsWith("submenu2"))
     {
-          let inputValues2= this.state.inputValues2;
-          let inputvaluesList2=[];
+          let inputValues2= {};
           let new_list2=[];
           let documents2=this.state.documents2;
+          let inputvaluesList2=[];
+
           if(name in n_inputValuesList2[0])
           {
+            inputvaluesList2=[];
             n_inputValuesList2[0][name]=value
             inputValues2[name] = n_inputValuesList2[0][name]
             inputvaluesList2.push(inputValues2)
           }
           else
           {
+            inputvaluesList2=[];
             inputValues2[name]=value
             inputvaluesList2.push(inputValues2)
           }
@@ -634,19 +640,21 @@ class EditUser extends Component
     }
     if(name.startsWith("submenu3"))
     {
-      let inputValues3= this.state.inputValues3;
-      let inputvaluesList3=[];
+      let inputValues3= {};
       let new_list3=[];
       let documents3=this.state.documents3;
+      let inputvaluesList3=[];
 
       if(name in n_inputValuesList3[0])
       {
+        inputvaluesList3=[];
         n_inputValuesList3[0][name]=value
         inputValues3[name] = n_inputValuesList3[0][name]
         inputvaluesList3.push(inputValues3)
       }
       else
       {
+        inputvaluesList3=[];
         inputValues3[name]=value
         inputvaluesList3.push(inputValues3)
       }
@@ -769,12 +777,13 @@ class EditUser extends Component
       if(valueslist['props'])
       {
         for (let [key, value, index] of Object.entries(valueslist)) {
+          console.log(sindex,'indexxxxxxxxxx')
             return(<DocumentInput  index={sindex } removeElement={this.removeElement}  addElement={this.addElement}
                                   name={valueslist.props.name} dynamictextChange ={this.dynamictextChange} value={valueslist.props.value} />)
             }
       }
       else {
-          let name = `submenu1-${index}`
+          let name = `submenu1-${sindex}`
           return (<DocumentInput  index={ sindex } removeElement={this.removeElement}  addElement={this.addElement}
                                   dynamictextChange ={this.dynamictextChange} name={name}  />)
 
@@ -794,7 +803,7 @@ class EditUser extends Component
       }
       else
       {
-        let name = `submenu2-${index}`
+        let name = `submenu2-${sindex}`
         return (<DocumentInput  index={ sindex } removeElement={this.removeElement}  addElement={this.addElement}
                    dynamictextChange ={this.dynamictextChange}  name={name}/>)
 
@@ -807,13 +816,13 @@ class EditUser extends Component
         for (let [key, value, index] of Object.entries(valueslist)) {
 
 
-                    return(<DocumentInput  index={ sindex } removeElement={this.removeElement}  addElement={this.addElement}
+                    return(<DocumentInput  index={sindex } removeElement={this.removeElement}  addElement={this.addElement}
                                   name={valueslist.props.name} dynamictextChange ={this.dynamictextChange} value={valueslist.props.value} />)
               }
       }
       else {
 
-        let name = `submenu3-${index}`
+        let name = `submenu3-${sindex}`
         return (<DocumentInput  index={ sindex } removeElement={this.removeElement}  addElement={this.addElement}
                    dynamictextChange ={this.dynamictextChange} name={name}/>)
       }
