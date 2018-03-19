@@ -22,7 +22,7 @@ class Main extends Component {
       showsubmenustatus3:false
 
     }
-   
+
     this.handlelogout = this.handlelogout.bind(this);
     this.handlemenus = this.handlemenus.bind(this);
     this.getmenus = this.getmenus.bind(this);
@@ -44,18 +44,18 @@ class Main extends Component {
   showmenus(event)
   {
     let a=event.target.parentNode.id
-    
+
     if(a==="Menu1_list")
     {
-      this.setState({showsubmenustatus1: true});  
+      this.setState({showsubmenustatus1: true});
     }
     if(a==="Menu2_list")
     {
-      this.setState({showsubmenustatus2: true});  
+      this.setState({showsubmenustatus2: true});
     }
     if(a==="Menu3_list")
     {
-      this.setState({showsubmenustatus3: true});  
+      this.setState({showsubmenustatus3: true});
     }
   }
 
@@ -65,20 +65,20 @@ class Main extends Component {
 
     if(a==="Menu1_list")
     {
-      this.setState({showsubmenustatus1: false});  
+      this.setState({showsubmenustatus1: false});
     }
     if(a==="Menu2_list")
     {
-      this.setState({showsubmenustatus2: false});  
+      this.setState({showsubmenustatus2: false});
     }
     if(a==="Menu3_list")
     {
-      this.setState({showsubmenustatus3: false});  
-    } 
+      this.setState({showsubmenustatus3: false});
+    }
   }
 
 
-  
+
   getmenus(menus)
   {
     return <nav className="navbar navbar-default">
@@ -89,7 +89,7 @@ class Main extends Component {
                   <li className={window.location.pathname==="/users"?"active":"default"} ><NavLink to="/users">Users</NavLink></li>
 
                   {menus.map((item, i) =>{
-                    if(item.checked)
+                    if(item.checked && item.text ==="Menu1")
                     {
                       if(item.submenus.length==0)
                       {
@@ -99,41 +99,107 @@ class Main extends Component {
                       else(item.submenus.length>0)
                       {
                         let submenus ='';
-                       
-                        item.submenus.map(function(valueslist) 
+
+                        item.submenus.map(function(valueslist)
                         {
                           let value=Object.values(valueslist);
-                         
+
 
                           submenus = value.map((smenu) =>{
                                             return <a key={smenu}>{smenu}</a>
                                         });
 
-                         
+
                         });
                           return <li className={"dropdown "+(window.location.pathname===item.url ? 'active' : 'default')} id={item.text+'_list'} onMouseEnter={this.showmenus} onMouseLeave={this.hidemenus}>
                                           <NavLink to={item.url}>{item.text} <span className="caret"></span></NavLink>
                                               {this.state.showsubmenustatus1?<div className="dropdown-content">
                                                 {submenus}
                                               </div>:<div></div>}
-                                              
-                                  </li>                                                
+
+                                  </li>
                       }
-                      
+
                     }
-                    
-                    
+
+                    if(item.checked && item.text ==="Menu2")
+                    {
+                      if(item.submenus.length==0)
+                      {
+                        return <li key={i} className={window.location.pathname===item.url?"active":"default"}>
+                              <NavLink to={item.url}>{item.text}</NavLink></li>
+                      }
+                      else(item.submenus.length>0)
+                      {
+                        let submenus ='';
+
+                        item.submenus.map(function(valueslist)
+                        {
+                          let value=Object.values(valueslist);
+
+
+                          submenus = value.map((smenu) =>{
+                                            return <a key={smenu}>{smenu}</a>
+                                        });
+
+
+                        });
+                          return <li className={"dropdown "+(window.location.pathname===item.url ? 'active' : 'default')} id={item.text+'_list'} onMouseEnter={this.showmenus} onMouseLeave={this.hidemenus}>
+                                          <NavLink to={item.url}>{item.text} <span className="caret"></span></NavLink>
+                                              {this.state.showsubmenustatus2?<div className="dropdown-content">
+                                                {submenus}
+                                              </div>:<div></div>}
+
+                                  </li>
+                      }
+
+                    }
+
+                    if(item.checked && item.text ==="Menu3")
+                    {
+                      if(item.submenus.length==0)
+                      {
+                        return <li key={i} className={window.location.pathname===item.url?"active":"default"}>
+                              <NavLink to={item.url}>{item.text}</NavLink></li>
+                      }
+                      else(item.submenus.length>0)
+                      {
+                        let submenus ='';
+
+                        item.submenus.map(function(valueslist)
+                        {
+                          let value=Object.values(valueslist);
+
+
+                          submenus = value.map((smenu) =>{
+                                            return <a key={smenu}>{smenu}</a>
+                                        });
+
+
+                        });
+                          return <li className={"dropdown "+(window.location.pathname===item.url ? 'active' : 'default')} id={item.text+'_list'} onMouseEnter={this.showmenus} onMouseLeave={this.hidemenus}>
+                                          <NavLink to={item.url}>{item.text} <span className="caret"></span></NavLink>
+                                              {this.state.showsubmenustatus3?<div className="dropdown-content">
+                                                {submenus}
+                                              </div>:<div></div>}
+
+                                  </li>
+                      }
+
+                    }
+
+
                   }
-                   
+
                   )}
-                 
+
                </ul>
               <ul className="nav navbar-nav navbar-right">
-                <li><NavLink to="/logout" onClick={this.handlelogout}><span className="glyphicon glyphicon-log-in"></span> Logout</NavLink></li>            
+                <li><NavLink to="/logout" onClick={this.handlelogout}><span className="glyphicon glyphicon-log-in"></span> Logout</NavLink></li>
               </ul>
               </div>
             </nav>;
-      
+
   }
 
   handlemenus(users)
@@ -147,7 +213,7 @@ class Main extends Component {
         users.data.map((user,i)=>{
           if(user.email == localStorage.getItem('email'))
           {
-            
+
             menus=user.menus
             return menus
           }
@@ -159,29 +225,29 @@ class Main extends Component {
         let lmenus=''
         if(users.data.email == localStorage.getItem('email'))
         {
-          
+
           lmenus=users.data.menus
           return (this.getmenus(lmenus))
         }
-      
+
       }
       return (this.getmenus(menus))
 
-       
+
     }
-      
+
   }
 
 
-  
-  render() 
+
+  render()
   {
     if(typeof(localStorage.getItem('token')) !== 'undefined' && localStorage.getItem('token') !== null){
     return (
       <div>
       {this.handlemenus(this.props.users)}
      </div>
-      
+
     );
   }else{
         return (
@@ -206,7 +272,7 @@ class Main extends Component {
 }
 
 function mapStateToProps(state){
-  
+
   return {
       loginReducer: state.loginReducer,
       users:state.usersReducer,

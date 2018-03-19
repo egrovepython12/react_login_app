@@ -23,11 +23,11 @@ class DocumentInput extends Component {
         this.props.dynamictextChange(fieldName,fieldValue);
     }
 
-  
+
   render() {
-    
-    return <div><input 
-      type="text" 
+
+    return <div><input
+      type="text"
       name={this.props.name} refs={this.props.name} id={this.props.name} onChange={this.onFieldChange} />
         <a onClick={this.props.addElement}><span className="glyphicon glyphicon-plus-sign"></span></a>
         <a onClick={()=>this.props.removeElement(this.props.index,this.props.name)} name={this.props.name}><span className="glyphicon glyphicon-remove"></span>
@@ -36,7 +36,7 @@ class DocumentInput extends Component {
 }
 
 
-class Register extends Component 
+class Register extends Component
 {
   constructor(props) {
     super(props)
@@ -61,7 +61,7 @@ class Register extends Component
       showInput:'',
       selectedmenu:'',
       errors: {},
-      checked:false         
+      checked:false
       }
       this.handleSubmit = this.handleSubmit.bind(this);
       this.handleChange = this.handleChange.bind(this);
@@ -74,7 +74,7 @@ class Register extends Component
       this.handlesubmenuvalueValiadtion = this.handlesubmenuvalueValiadtion.bind(this);
       this.dynamictextbox_creation = this.dynamictextbox_creation.bind(this);
     }
-  
+
   componentWillReceiveProps(nextProps)
   {
     if(nextProps.registerReducer.success == true)
@@ -94,7 +94,7 @@ class Register extends Component
       });
   }
 
-      
+
   // handles the validation for all fields of register form
   handleValidation()
   {
@@ -179,7 +179,7 @@ class Register extends Component
            if(!fields["username"].match(/^[a-zA-Z]+$/)){
                formIsValid = false;
                errors["username"] = "Username field value should contain only letters";
-           }          
+           }
       }
 
       //Password
@@ -192,10 +192,10 @@ class Register extends Component
            if(!fields["password"].match(/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/)){
                formIsValid = false;
                errors["password"] = "Password field should be of length  6 to 16 valid characters and atleast one number and one special character";
-           }          
+           }
       }
 
-      
+
       //Email
       if(!fields["email"]){
          formIsValid = false;
@@ -216,7 +216,7 @@ class Register extends Component
       {
         let arr1 = elements
         let arr3 = this.state.fields.menus
-        
+
         if(isEqual(arr1, arr3))
         {
           formIsValid = false;
@@ -225,7 +225,7 @@ class Register extends Component
         else
         {
           this.state.fields.menus.map((menu, index) => {
-            
+
             if(menu.checked && menu.text=="Menu1")
             {
               let submenu1_list ={}
@@ -258,7 +258,7 @@ class Register extends Component
                       }
 
                     }
-                  
+
                   }
                 }
               }
@@ -295,7 +295,7 @@ class Register extends Component
                       }
 
                     }
-                  
+
                   }
                 }
               }
@@ -331,7 +331,7 @@ class Register extends Component
                       }
 
                     }
-                  
+
                   }
                 }
               }
@@ -347,7 +347,7 @@ class Register extends Component
           if (!(lastAtPos <lastDotPos && lastAtPos > 0 && fields["email"].indexOf('@@') == -1 && lastDotPos > 2 && (fields["email"].length - lastDotPos) > 2)) {
             formIsValid = false;
             errors["email"] = "The given email is not valid email address";
-          }   
+          }
 
     }
     this.setState({errors: errors});
@@ -380,16 +380,16 @@ class Register extends Component
         if((new Set(value)).size !== value.length)
         {
           seenDuplicate=true;
-        }  
+        }
 
       });
       return seenDuplicate;
    }
 
-  
+
    //add dynamically created elements
    addElement(event)
-   {     
+   {
       let a=event.target.parentNode
       let b=a.parentNode
       let c=b.parentNode
@@ -408,14 +408,14 @@ class Register extends Component
       {
         const documents3 = this.state.documents3.concat(DocumentInput);
         this.setState({documents3: documents3});
-      }        
-      
+      }
+
    }
 
    //remove dynamically created elements
    removeElement(index,name)
    {
-      
+
       if(name.startsWith("submenu1"))
       {
         let totallist1 = this.state.documents1;
@@ -425,7 +425,7 @@ class Register extends Component
               delete totallist1[sindex]
            }
         });
-        
+
         this.setState({documents1:totallist1});
 
       }
@@ -438,7 +438,7 @@ class Register extends Component
               delete totallist2[sindex]
            }
         });
-        
+
         this.setState({documents2:totallist2});
 
       }
@@ -451,11 +451,11 @@ class Register extends Component
               delete totallist3[sindex]
            }
         });
-        
+
         this.setState({documents3:totallist3});
 
       }
-      
+
    }
 
    //dynamic textbox field chnage
@@ -466,7 +466,7 @@ class Register extends Component
       let inputValues1= this.state.inputValues1;
       let inputvaluesList1=[];
       inputValues1[name]=value
-      inputvaluesList1.push(inputValues1)  
+      inputvaluesList1.push(inputValues1)
       this.setState({inputValues1: inputValues1 ,
                     inputvaluesList1:inputvaluesList1})
     }
@@ -475,7 +475,7 @@ class Register extends Component
       let inputValues2= this.state.inputValues2;
       let inputvaluesList2=[];
       inputValues2[name]=value
-      inputvaluesList2.push(inputValues2)  
+      inputvaluesList2.push(inputValues2)
       this.setState({inputValues2: inputValues2 ,
                     inputvaluesList2:inputvaluesList2})
     }
@@ -484,7 +484,7 @@ class Register extends Component
       let inputValues3= this.state.inputValues3;
       let inputvaluesList3=[];
       inputValues3[name]=value
-      inputvaluesList3.push(inputValues3)  
+      inputvaluesList3.push(inputValues3)
       this.setState({inputValues3: inputValues3 ,
                     inputvaluesList3:inputvaluesList3})
     }
@@ -492,28 +492,28 @@ class Register extends Component
   }
 
   // handles the submit event for registration form fields
-  handleSubmit(e) { 
-    e.preventDefault(); 
+  handleSubmit(e) {
+    e.preventDefault();
     if(this.handleValidation())
     {
       this.props.register_user(this.state.fields);
     }else{
       toastr.error("Form has errors.")
     }
-    
-  } 
-  
+
+  }
+
   //update menu state values
   updateStateList(e, value,index){
     let fields=this.state.fields;
     let array = this.state.elements;
-    
+
     if (e.target.checked)
     {
       value.checked=true
       value.submenus = this.state.inputvaluesList
-      
-    } 
+
+    }
     else
     {
      // delete frm an array
@@ -539,7 +539,7 @@ class Register extends Component
     this.setState({
       fields: update(fields,{menus:{$set:array}})
     })
-   
+
   }
 
   dynamictextbox_creation(index)
@@ -547,21 +547,21 @@ class Register extends Component
       const documents1 = this.state.documents1.map((Element, index) => {
       const name = `submenu1-${index}`
       return <Element key={ index } index={ index } removeElement={this.removeElement}
-       addElement={this.addElement} selectedmenu = {this.state.selectedmenu}
+       addElement={this.addElement}
        name={name} dynamictextChange ={this.dynamictextChange}/>
     });
 
     const documents2 = this.state.documents2.map((Element, index) => {
       const name = `submenu2-${index}`
       return <Element key={ index } index={ index } removeElement={this.removeElement}
-       addElement={this.addElement} selectedmenu = {this.state.selectedmenu}
+       addElement={this.addElement}
        name={name} dynamictextChange ={this.dynamictextChange}/>
     });
 
     const documents3 = this.state.documents3.map((Element, index) => {
       const name = `submenu3-${index}`
       return <Element key={ index } index={ index } removeElement={this.removeElement}
-       addElement={this.addElement} selectedmenu = {this.state.selectedmenu}
+       addElement={this.addElement} 
        name={name} dynamictextChange ={this.dynamictextChange}/>
     });
 
@@ -580,29 +580,29 @@ class Register extends Component
 
   }
 
-  render() { 
-      
+  render() {
+
   return (
     <div>
       <Main/>
         <div className="container">
       <h2>Register Form</h2>
-      <form onSubmit={this.handleSubmit} >        
+      <form onSubmit={this.handleSubmit} >
           <div className="form-group">
             <label htmlFor="text">Email:</label>
-            <input type="text" className="form-control" id="email" placeholder="Enter email" 
+            <input type="text" className="form-control" id="email" placeholder="Enter email"
             name="email" onChange={this.handleChange} />
             <span style={{color: "red"}}>{this.state.errors["email"]}</span>
           </div>
           <div className="form-group">
             <label htmlFor="text">username:</label>
-            <input type="text" className="form-control" id="username" placeholder="Enter username" 
+            <input type="text" className="form-control" id="username" placeholder="Enter username"
             name="username" onChange={this.handleChange} />
             <span style={{color: "red"}}>{this.state.errors["username"]}</span>
           </div>
           <div className="form-group">
             <label htmlFor="password">Password:</label>
-            <input type="password" className="form-control" id="password" placeholder="Enter password" 
+            <input type="password" className="form-control" id="password" placeholder="Enter password"
             name="password" onChange={this.handleChange} />
             <span style={{color: "red"}}>{this.state.errors["password"]}</span>
           </div>
@@ -618,13 +618,13 @@ class Register extends Component
                   admin
                 </label>
               </div>
-              
+
           </div>
           <div className="form-group">
             <label htmlFor="menu">Menu:</label>
               <ul>
               {this.state.elements.map((item, i) =>
-                <li key={i}>                 
+                <li key={i}>
                   <input type="checkbox" name="menus" onClick={(e)=>this.updateStateList(e,item,i)} id={item.text} />   {item.text}
                   {item.checked?<div ref={item.text+'_lists'} id={item.text+'_lists'} name={item.text+'_submenus'}>{this.dynamictextbox_creation(i)}
                   <span style={{color: "red"}}>
@@ -633,7 +633,7 @@ class Register extends Component
               )}
             </ul>
             <br/>
-            <span style={{color: "red"}}>{this.state.errors["menus"]}</span> 
+            <span style={{color: "red"}}>{this.state.errors["menus"]}</span>
           </div>
           <button type="submit" className="btn btn-default">Submit</button>
         </form>
