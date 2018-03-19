@@ -554,13 +554,27 @@ class EditUser extends Component
         new_list1 = test1
       }
 
-      let commentIndex = documents1.findIndex(valuelist => valuelist['props'].name==name);
-      let updatedComment = update(documents1[commentIndex], {props:{value: {$set:value}}});
-      let newData = update(documents1, {
-          $splice: [[commentIndex, 1, updatedComment]]
-      });
+      let commentIndex = documents1.map(function(valueslist)
+      {
+        if(valueslist['$$typeof']&& valueslist['props']&&'name' in valueslist['props'])
+        {
+          return valueslist['props'].name;
+        }
+        else {
+          return 'test'
+        }
+      }).indexOf(name);
 
-      this.setState({inputValues1: inputValues1 ,inputvaluesList1:new_list1,documents1: newData})
+      if(commentIndex!=-1)
+      {
+        let updatedComment = update(documents1[commentIndex], {props:{value: {$set:value}}});
+        let newData = update(documents1, {
+            $splice: [[commentIndex, 1, updatedComment]]
+        });
+        this.setState({documents1: newData})
+      }
+
+      this.setState({inputValues1: inputValues1 ,inputvaluesList1:new_list1})
 
     }
     if(name.startsWith("submenu2"))
@@ -593,13 +607,27 @@ class EditUser extends Component
             new_list2 = test2
           }
 
-          let commentIndex = documents2.findIndex(valuelist => valuelist['props'].name==name);
-          let updatedComment = update(documents2[commentIndex], {props:{value: {$set:value}}});
-          let newData = update(documents2, {
-              $splice: [[commentIndex, 1, updatedComment]]
-          });
+          let commentIndex = documents2.map(function(valueslist)
+          {
+            if(valueslist['$$typeof']&& valueslist['props']&&'name' in valueslist['props'])
+            {
+              return valueslist['props'].name;
+            }
+            else {
+              return 'test'
+            }
+          }).indexOf(name);
 
-          this.setState({inputValues2: inputValues2 ,inputvaluesList2:new_list2,documents2: newData})
+          if(commentIndex!=-1)
+          {
+            let updatedComment = update(documents2[commentIndex], {props:{value: {$set:value}}});
+            let newData = update(documents2, {
+                $splice: [[commentIndex, 1, updatedComment]]
+            });
+            this.setState({documents2: newData})
+          }
+
+          this.setState({inputValues2: inputValues2 ,inputvaluesList2:new_list2})
 
 
 
@@ -635,13 +663,27 @@ class EditUser extends Component
         new_list3 = test3
       }
 
-      let commentIndex = documents3.findIndex(valuelist => valuelist['props'].name==name);
-      let updatedComment = update(documents3[commentIndex], {props:{value: {$set:value}}});
-      let newData = update(documents3, {
-          $splice: [[commentIndex, 1, updatedComment]]
-      });
+      let commentIndex = documents3.map(function(valueslist)
+      {
+        if(valueslist['$$typeof']&& valueslist['props']&&'name' in valueslist['props'])
+        {
+          return valueslist['props'].name;
+        }
+        else {
+          return 'test'
+        }
+      }).indexOf(name);
 
-      this.setState({inputValues3: inputValues3 ,inputvaluesList3:new_list3,documents3: newData})
+      if(commentIndex!=-1)
+      {
+        let updatedComment = update(documents3[commentIndex], {props:{value: {$set:value}}});
+        let newData = update(documents3, {
+            $splice: [[commentIndex, 1, updatedComment]]
+        });
+        this.setState({documents3: newData})
+      }
+
+      this.setState({inputValues3: inputValues3 ,inputvaluesList3:new_list3})
     }
   }
 
@@ -674,6 +716,7 @@ class EditUser extends Component
 
       if(name.startsWith("submenu1"))
       {
+        console.log(this.state.documents1, index, name,'sdddddddd')
         let totallist1 = this.state.documents1;
         totallist1.map((Element, sindex) => {
            if(sindex === index)
@@ -722,56 +765,56 @@ class EditUser extends Component
 
   displaysubmenus(index)
   {
-    let documents1 = this.state.documents1.map((valueslist,index) => {
+    let documents1 = this.state.documents1.map((valueslist,sindex) => {
       if(valueslist['props'])
       {
         for (let [key, value, index] of Object.entries(valueslist)) {
-            return(<DocumentInput  index={ valueslist.props.index } removeElement={this.removeElement}  addElement={this.addElement}
+            return(<DocumentInput  index={sindex } removeElement={this.removeElement}  addElement={this.addElement}
                                   name={valueslist.props.name} dynamictextChange ={this.dynamictextChange} value={valueslist.props.value} />)
             }
       }
       else {
           let name = `submenu1-${index}`
-          return (<DocumentInput  index={ index } removeElement={this.removeElement}  addElement={this.addElement}
+          return (<DocumentInput  index={ sindex } removeElement={this.removeElement}  addElement={this.addElement}
                                   dynamictextChange ={this.dynamictextChange} name={name}  />)
 
       }
     });
 
-    let documents2 = this.state.documents2.map((valueslist,index) =>
+    let documents2 = this.state.documents2.map((valueslist,sindex) =>
     {
       if(valueslist['props'])
       {
 
         for (let [key, value, index] of Object.entries(valueslist)) {
 
-               return(<DocumentInput  index={ valueslist.props.index } removeElement={this.removeElement}  addElement={this.addElement}
+               return(<DocumentInput  index={ sindex } removeElement={this.removeElement}  addElement={this.addElement}
                                   name={valueslist.props.name} dynamictextChange ={this.dynamictextChange} value={valueslist.props.value} />)
               }
       }
       else
       {
         let name = `submenu2-${index}`
-        return (<DocumentInput  index={ index } removeElement={this.removeElement}  addElement={this.addElement}
+        return (<DocumentInput  index={ sindex } removeElement={this.removeElement}  addElement={this.addElement}
                    dynamictextChange ={this.dynamictextChange}  name={name}/>)
 
       }
     });
 
-    let documents3 = this.state.documents3.map((valueslist,index) => {
+    let documents3 = this.state.documents3.map((valueslist,sindex) => {
       if(valueslist['props'])
       {
         for (let [key, value, index] of Object.entries(valueslist)) {
 
 
-                    return(<DocumentInput  index={ valueslist.props.index } removeElement={this.removeElement}  addElement={this.addElement}
+                    return(<DocumentInput  index={ sindex } removeElement={this.removeElement}  addElement={this.addElement}
                                   name={valueslist.props.name} dynamictextChange ={this.dynamictextChange} value={valueslist.props.value} />)
               }
       }
       else {
 
         let name = `submenu3-${index}`
-        return (<DocumentInput  index={ index } removeElement={this.removeElement}  addElement={this.addElement}
+        return (<DocumentInput  index={ sindex } removeElement={this.removeElement}  addElement={this.addElement}
                    dynamictextChange ={this.dynamictextChange} name={name}/>)
       }
     });
