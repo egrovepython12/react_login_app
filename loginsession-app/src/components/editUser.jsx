@@ -68,6 +68,7 @@ class EditUser extends Component
     this.getmenuList = this.getmenuList.bind(this);
     this.handleduplicatevalueValidation = this.handleduplicatevalueValidation.bind(this);
     this.handlesubmenuvalueValiadtion = this.handlesubmenuvalueValiadtion.bind(this);
+    this.handleemptysubmenuvalueValiadtion = this.handleemptysubmenuvalueValiadtion.bind(this);
 
   }
 
@@ -208,6 +209,8 @@ class EditUser extends Component
            }
       }
 
+      console.log(this.state.documents1,'documents11111111')
+      console.log(this.state.inputvaluesList1,'inputlistttttttttttttttt');
       let isEqual = function (value, other) {
 
         // Get the value type
@@ -304,7 +307,13 @@ class EditUser extends Component
                 else if(this.state.inputvaluesList1.length>0)
                 {
                   let value_type_status = this.handlesubmenuvalueValiadtion(this.state.inputvaluesList1)
-                  if(value_type_status)
+                  let empty_value_status = this.handleemptysubmenuvalueValiadtion(this.state.inputvaluesList1)
+                  if(empty_value_status)
+                  {
+                    formIsValid = false;
+                    errors["Menu1_submenus"] = "Submenu fields  values should not be empty or remove it";
+                  }
+                  else if(value_type_status)
                   {
                     formIsValid = false;
                     errors["Menu1_submenus"] = "Submenu fields  values should contain only letters";
@@ -341,7 +350,13 @@ class EditUser extends Component
                 else if(this.state.inputvaluesList2.length>0)
                 {
                   let value_type_status = this.handlesubmenuvalueValiadtion(this.state.inputvaluesList2)
-                  if(value_type_status)
+                  let empty_value_status = this.handleemptysubmenuvalueValiadtion(this.state.inputvaluesList2)
+                  if(empty_value_status)
+                  {
+                    formIsValid = false;
+                    errors["Menu2_submenus"] = "Submenu fields  values should not be empty or remove it";
+                  }
+                  else if(value_type_status)
                   {
                     formIsValid = false;
                     errors["Menu2_submenus"] = "Submenu fields  values should contain only letters";
@@ -377,7 +392,13 @@ class EditUser extends Component
                 else if(this.state.inputvaluesList3.length>0)
                 {
                   let value_type_status = this.handlesubmenuvalueValiadtion(this.state.inputvaluesList3)
-                  if(value_type_status)
+                  let empty_value_status = this.handleemptysubmenuvalueValiadtion(this.state.inputvaluesList3)
+                  if(empty_value_status)
+                  {
+                    formIsValid = false;
+                    errors["Menu3_submenus"] = "Submenu fields  values should not be empty or remove it";
+                  }
+                  else if(value_type_status)
                   {
                     formIsValid = false;
                     errors["Menu3_submenus"] = "Submenu fields  values should contain only letters";
@@ -418,6 +439,23 @@ class EditUser extends Component
        for(let i=0;i<value.length;i++)
        {
           if(!value[i].match(/^[a-zA-Z]+$/))
+          {
+             valuetypemismatch=true
+          }
+       }
+
+     });
+     return valuetypemismatch;
+
+  }
+  handleemptysubmenuvalueValiadtion(inputArray)
+  {
+     let valuetypemismatch = false ;
+     inputArray.map(function(item) {
+       let value=Object.values(item);
+       for(let i=0;i<value.length;i++)
+       {
+          if(value[i]=="")
           {
              valuetypemismatch=true
           }
@@ -718,22 +756,30 @@ class EditUser extends Component
       }
 
    }
-
-  removeElement(index,name)
-  {
+   removeElement(index,name)
+   {
 
       if(name.startsWith("submenu1"))
       {
-        console.log(this.state.documents1, index, name,'sdddddddd')
         let totallist1 = this.state.documents1;
         totallist1.map((Element, sindex) => {
            if(sindex === index)
            {
-              delete totallist1[sindex]
+            totallist1.splice(sindex,1)
            }
         });
 
-        this.setState({documents1:totallist1});
+        let update_inputlist1 =this.state.inputvaluesList1;
+        update_inputlist1.map((objlist,index) => {
+          for(let[key,value] of Object.entries(objlist)) {
+                if (key===name) {
+                  delete objlist[key];
+                }
+          }
+        });
+
+
+        this.setState({documents1:totallist1,inputvaluesList1:update_inputlist1});
 
       }
       if(name.startsWith("submenu2"))
@@ -742,11 +788,21 @@ class EditUser extends Component
         totallist2.map((Element, sindex) => {
            if(sindex === index)
            {
-              delete totallist2[sindex]
+              totallist2.splice(sindex,1)
            }
         });
 
-        this.setState({documents2:totallist2});
+        let update_inputlist2 =this.state.inputvaluesList2;
+        update_inputlist2.map((objlist,index) => {
+          for(let[key,value] of Object.entries(objlist)) {
+                if (key===name) {
+                  delete objlist[key];
+                }
+          }
+        });
+
+
+        this.setState({documents2:totallist2,inputvaluesList2:update_inputlist2});
 
       }
       if(name.startsWith("submenu3"))
@@ -755,15 +811,26 @@ class EditUser extends Component
         totallist3.map((Element, sindex) => {
            if(sindex === index)
            {
-              delete totallist3[sindex]
+              totallist3.splice(sindex,1)
            }
         });
 
-        this.setState({documents3:totallist3});
+        let update_inputlist3 =this.state.inputvaluesList3;
+        update_inputlist3.map((objlist,index) => {
+          for(let[key,value] of Object.entries(objlist)) {
+                if (key===name) {
+                  delete objlist[key];
+                }
+          }
+        });
+
+
+        this.setState({documents3:totallist3,inputvaluesList3:update_inputlist3});
+
 
       }
 
-  }
+   }
 
   getmenuList(index)
   {

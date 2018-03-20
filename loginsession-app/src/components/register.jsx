@@ -73,6 +73,7 @@ class Register extends Component
       this.handleduplicatevalueValidation = this.handleduplicatevalueValidation.bind(this);
       this.handlesubmenuvalueValiadtion = this.handlesubmenuvalueValiadtion.bind(this);
       this.dynamictextbox_creation = this.dynamictextbox_creation.bind(this);
+      this.handleemptysubmenuvalueValiadtion = this.handleemptysubmenuvalueValiadtion.bind(this);
     }
 
   componentWillReceiveProps(nextProps)
@@ -106,7 +107,7 @@ class Register extends Component
       ]
       let errors = {};
       let formIsValid = true;
-
+      console.log(this.state.documents1,'documents!')
       let isEqual = function (value, other) {
 
         // Get the value type
@@ -239,7 +240,13 @@ class Register extends Component
                 else if(this.state.inputvaluesList1.length>0)
                 {
                   let value_type_status = this.handlesubmenuvalueValiadtion(this.state.inputvaluesList1)
-                  if(value_type_status)
+                  let empty_value_status = this.handleemptysubmenuvalueValiadtion(this.state.inputvaluesList1)
+                  if(empty_value_status)
+                  {
+                    formIsValid = false;
+                    errors["Menu1_submenus"] = "Submenu fields  values should not be empty or remove it";
+                  }
+                  else if(value_type_status)
                   {
                     formIsValid = false;
                     errors["Menu1_submenus"] = "Submenu fields  values should contain only letters";
@@ -276,7 +283,13 @@ class Register extends Component
                 else if(this.state.inputvaluesList2.length>0)
                 {
                   let value_type_status = this.handlesubmenuvalueValiadtion(this.state.inputvaluesList2)
-                  if(value_type_status)
+                  let empty_value_status = this.handleemptysubmenuvalueValiadtion(this.state.inputvaluesList2)
+                  if(empty_value_status)
+                  {
+                    formIsValid = false;
+                    errors["Menu2_submenus"] = "Submenu fields  values should not be empty or remove it";
+                  }
+                  else if(value_type_status)
                   {
                     formIsValid = false;
                     errors["Menu2_submenus"] = "Submenu fields  values should contain only letters";
@@ -312,7 +325,13 @@ class Register extends Component
                 else if(this.state.inputvaluesList3.length>0)
                 {
                   let value_type_status = this.handlesubmenuvalueValiadtion(this.state.inputvaluesList3)
-                  if(value_type_status)
+                  let empty_value_status = this.handleemptysubmenuvalueValiadtion(this.state.inputvaluesList3)
+                  if(empty_value_status)
+                  {
+                    formIsValid = false;
+                    errors["Menu3_submenus"] = "Submenu fields  values should not be empty or remove it";
+                  }
+                  else if(value_type_status)
                   {
                     formIsValid = false;
                     errors["Menu3_submenus"] = "Submenu fields  values should contain only letters";
@@ -372,6 +391,27 @@ class Register extends Component
 
    }
 
+   handleemptysubmenuvalueValiadtion(inputArray)
+   {
+      let valuetypemismatch = false ;
+      inputArray.map(function(item) {
+        console.log(item,'itemmm')
+        let value=Object.values(item);
+        console.log(value,'valueeeeeeeeee')
+        for(let i=0;i<value.length;i++)
+        {
+           if(value[i]=="")
+           {
+             console.log('sdjhdjshdj')
+              valuetypemismatch=true
+           }
+        }
+
+      });
+      return valuetypemismatch;
+
+   }
+
    handleduplicatevalueValidation(inputArray)
    {
       let seenDuplicate = false;
@@ -422,11 +462,21 @@ class Register extends Component
         totallist1.map((Element, sindex) => {
            if(sindex === index)
            {
-              delete totallist1[sindex]
+            totallist1.splice(sindex,1)
            }
         });
 
-        this.setState({documents1:totallist1});
+        let update_inputlist1 =this.state.inputvaluesList1;
+        update_inputlist1.map((objlist,index) => {
+          for(let[key,value] of Object.entries(objlist)) {
+                if (key===name) {
+                  delete objlist[key];
+                }
+          }
+        });
+
+
+        this.setState({documents1:totallist1,inputvaluesList1:update_inputlist1});
 
       }
       if(name.startsWith("submenu2"))
@@ -435,11 +485,21 @@ class Register extends Component
         totallist2.map((Element, sindex) => {
            if(sindex === index)
            {
-              delete totallist2[sindex]
+              totallist2.splice(sindex,1)
            }
         });
 
-        this.setState({documents2:totallist2});
+        let update_inputlist2 =this.state.inputvaluesList2;
+        update_inputlist2.map((objlist,index) => {
+          for(let[key,value] of Object.entries(objlist)) {
+                if (key===name) {
+                  delete objlist[key];
+                }
+          }
+        });
+
+
+        this.setState({documents2:totallist2,inputvaluesList2:update_inputlist2});
 
       }
       if(name.startsWith("submenu3"))
@@ -448,11 +508,22 @@ class Register extends Component
         totallist3.map((Element, sindex) => {
            if(sindex === index)
            {
-              delete totallist3[sindex]
+              totallist3.splice(sindex,1)
            }
         });
 
-        this.setState({documents3:totallist3});
+        let update_inputlist3 =this.state.inputvaluesList3;
+        update_inputlist3.map((objlist,index) => {
+          for(let[key,value] of Object.entries(objlist)) {
+                if (key===name) {
+                  delete objlist[key];
+                }
+          }
+        });
+
+
+        this.setState({documents3:totallist3,inputvaluesList3:update_inputlist3});
+
 
       }
 
@@ -546,22 +617,22 @@ class Register extends Component
   {
       const documents1 = this.state.documents1.map((Element, index) => {
       const name = `submenu1-${index}`
-      return <Element key={ index } index={ index } removeElement={this.removeElement}
+      return <Element ref={'Element-'+index} key={ index } index={ index } removeElement={this.removeElement}
        addElement={this.addElement}
        name={name} dynamictextChange ={this.dynamictextChange}/>
     });
 
     const documents2 = this.state.documents2.map((Element, index) => {
       const name = `submenu2-${index}`
-      return <Element key={ index } index={ index } removeElement={this.removeElement}
+      return <Element ref={'Element-'+index} key={ index } index={ index } removeElement={this.removeElement}
        addElement={this.addElement}
        name={name} dynamictextChange ={this.dynamictextChange}/>
     });
 
     const documents3 = this.state.documents3.map((Element, index) => {
       const name = `submenu3-${index}`
-      return <Element key={ index } index={ index } removeElement={this.removeElement}
-       addElement={this.addElement} 
+      return <Element ref={'Element-'+index} key={ index } index={ index } removeElement={this.removeElement}
+       addElement={this.addElement}
        name={name} dynamictextChange ={this.dynamictextChange}/>
     });
 
