@@ -7,7 +7,7 @@ export function LoginSuccess(bool,data) {
         payload:{
             "isloggedin":bool,
             data
-        }       
+        }
     };
 }
 
@@ -17,7 +17,7 @@ export function LoginFailure(bool) {
         payload:{
             "isloggedin":bool
         }
-        
+
     };
 }
 
@@ -27,7 +27,7 @@ export function Logoutsuccess(bool) {
         payload:{
             "islogout":bool
         }
-        
+
     };
 }
 
@@ -37,7 +37,7 @@ export function Logoutfailure(bool) {
         payload:{
             "islogout":bool
         }
-        
+
     };
 }
 
@@ -47,7 +47,7 @@ export function Userseditsuccess(items,bool) {
         payload:{
             "data":items,
             "isupdated":bool
-        }        
+        }
     };
 }
 
@@ -58,7 +58,7 @@ export function Userseditfailure(items,bool) {
             "data":items,
             "isupdated":bool
         }
-        
+
     };
 }
 
@@ -69,7 +69,7 @@ export function Userdeletesuccess(items,bool) {
         payload:{
             "data":items,
             "isdeleted":bool
-        }        
+        }
     };
 }
 
@@ -80,7 +80,7 @@ export function Userdeletefailure(items,bool) {
             "data":items,
             "isdeleted":bool
         }
-        
+
     };
 }
 
@@ -90,7 +90,7 @@ export function Userdetailsuccess(items,bool) {
         payload:{
             "data":items,
             "is_detail":bool
-        }        
+        }
     };
 }
 
@@ -101,7 +101,7 @@ export function Userdetailfailure(items,bool) {
             "data":items,
             "is_detail":bool
         }
-        
+
     };
 }
 
@@ -111,7 +111,7 @@ export function Userslistsuccess(items) {
         payload:{
             "data":items
         }
-        
+
     };
 }
 
@@ -121,7 +121,7 @@ export function Userslistfailure(items) {
         payload:{
             "data":items
         }
-        
+
     };
 }
 
@@ -131,7 +131,7 @@ export function register_success(items,bool) {
         payload:{
             "data":items,
             "success":bool
-        }       
+        }
     };
 }
 
@@ -142,23 +142,23 @@ export function register_failure(items,bool) {
             "data":items,
             "success":bool
         }
-        
+
     };
 }
 
 
 export const register_user = (data) => (dispatch) => {
-    fetch('http://127.0.0.1:8000/api/users/create', {
+    fetch('http://10.10.0.61:8000/api/users/create', {
           method: "post",
           body: JSON.stringify(data),
           headers: {
             "Content-Type": "application/json"
           },
         }).then(function(response) {
-            
+
             return response.json();
         })
-        .then(function(response) 
+        .then(function(response)
         {
             if (response && response.status === 201)
             {
@@ -172,21 +172,21 @@ export const register_user = (data) => (dispatch) => {
 
             }
         });
-    
+
 };
 
 export const login_user = (data) => (dispatch) => {
-    fetch('http://127.0.0.1:8000/api/users/authentication/', {
+    fetch('http://10.10.0.61:8000/api/users/authentication/', {
           method: "post",
           body: JSON.stringify(data),
           headers: {
             "Content-Type": "application/json"
           },
         }).then(function(response) {
-            
+
             return response.json();
         })
-        .then(function(response) 
+        .then(function(response)
         {
             if (response && response.status === 200)
             {
@@ -205,7 +205,7 @@ export const login_user = (data) => (dispatch) => {
 
             }
         });
-    
+
 };
 
 
@@ -214,16 +214,16 @@ export const get_user = (searchdata) => (dispatch) => {
     if(searchdata!==undefined&&searchdata!==""){
         a="?search="+searchdata;
     }
-    fetch('http://127.0.0.1:8000/api/users/list'+a, {
+    fetch('http://10.10.0.61:8000/api/users/list'+a, {
           method: "get",
           headers: {
             "Authorization": "Bearer "+localStorage.getItem("token")
           },
         }).then(function(response) {
-            
+
             return response.json();
         })
-        .then(function(response) 
+        .then(function(response)
         {
             if (response && response.status === 200)
             {
@@ -237,11 +237,11 @@ export const get_user = (searchdata) => (dispatch) => {
 
             }
         });
-    
+
 };
 
 export const edit_user = (data,id) => (dispatch) => {
-    fetch(`http://127.0.0.1:8000/api/users/detail/${id}`, {
+    fetch(`http://10.10.0.61:8000/api/users/detail/${id}`, {
           method: "put",
           body: JSON.stringify(data),
           headers: {
@@ -249,10 +249,10 @@ export const edit_user = (data,id) => (dispatch) => {
             "Authorization":"Bearer "+localStorage.getItem("token")
           },
         }).then(function(response) {
-            
+
             return response.json();
         })
-        .then(function(response) 
+        .then(function(response)
         {
             if (response && response.status === 200)
             {
@@ -268,21 +268,21 @@ export const edit_user = (data,id) => (dispatch) => {
 
             }
         });
-    
+
 };
 
 
 export const delete_user = (id) => (dispatch) => {
-    fetch(`http://127.0.0.1:8000/api/users/detail/${id}`, {
+    fetch(`http://10.10.0.61:8000/api/users/detail/${id}`, {
           method: "delete",
           headers: {
             "Authorization":"Bearer "+localStorage.getItem("token")
           },
         }).then(function(response) {
-            
+
             return response.json();
         })
-        .then(function(response) 
+        .then(function(response)
         {
             if (response && response.status === 200)
             {
@@ -296,5 +296,5 @@ export const delete_user = (id) => (dispatch) => {
 
             }
         });
-    
+
 };

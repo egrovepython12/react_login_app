@@ -463,6 +463,7 @@ class Register extends Component
            if(sindex === index)
            {
             totallist1.splice(sindex,1)
+            
            }
         });
 

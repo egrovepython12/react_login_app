@@ -564,10 +564,11 @@ class EditUser extends Component
     if(name.startsWith("submenu1"))
     {
       debugger;
-      let inputValues1={};
+      let inputValues1= {};
       let new_list1=[];
       let documents1=this.state.documents1;
       let inputvaluesList1=[];
+      debugger;
 
       if(name in n_inputValuesList1[0])
       {
@@ -606,24 +607,28 @@ class EditUser extends Component
         }
       }).indexOf(name);
 
-      if(commentIndex!=-1)
+      if(commentIndex!==undefined)
       {
+        if( commentIndex!=-1)
+        {
         let updatedComment = update(documents1[commentIndex], {props:{value: {$set:value}}});
         let newData = update(documents1, {
             $splice: [[commentIndex, 1, updatedComment]]
         });
         this.setState({documents1: newData})
+        }
       }
 
       this.setState({inputValues1: inputValues1 ,inputvaluesList1:new_list1})
 
-    }
+}
     if(name.startsWith("submenu2"))
     {
           let inputValues2= {};
           let new_list2=[];
           let documents2=this.state.documents2;
           let inputvaluesList2=[];
+          debugger;
 
           if(name in n_inputValuesList2[0])
           {
@@ -662,13 +667,16 @@ class EditUser extends Component
             }
           }).indexOf(name);
 
-          if(commentIndex!=-1)
+          if(commentIndex!==undefined)
           {
+            if( commentIndex!=-1)
+            {
             let updatedComment = update(documents2[commentIndex], {props:{value: {$set:value}}});
             let newData = update(documents2, {
                 $splice: [[commentIndex, 1, updatedComment]]
             });
             this.setState({documents2: newData})
+            }
           }
 
           this.setState({inputValues2: inputValues2 ,inputvaluesList2:new_list2})
@@ -682,6 +690,7 @@ class EditUser extends Component
       let new_list3=[];
       let documents3=this.state.documents3;
       let inputvaluesList3=[];
+      debugger;
 
       if(name in n_inputValuesList3[0])
       {
@@ -720,13 +729,17 @@ class EditUser extends Component
         }
       }).indexOf(name);
 
-      if(commentIndex!=-1)
+      if(commentIndex!==undefined)
       {
-        let updatedComment = update(documents3[commentIndex], {props:{value: {$set:value}}});
-        let newData = update(documents3, {
-            $splice: [[commentIndex, 1, updatedComment]]
-        });
-        this.setState({documents3: newData})
+        if( commentIndex!=-1)
+        {
+          let updatedComment = update(documents3[commentIndex], {props:{value: {$set:value}}});
+          let newData = update(documents3, {
+              $splice: [[commentIndex, 1, updatedComment]]
+          });
+          this.setState({documents3: newData})
+        }
+
       }
 
       this.setState({inputValues3: inputValues3 ,inputvaluesList3:new_list3})
@@ -765,7 +778,8 @@ class EditUser extends Component
         totallist1.map((Element, sindex) => {
            if(sindex === index)
            {
-            totallist1.splice(sindex,1)
+            // totallist1.splice(sindex,1)
+            delete totallist1[sindex]
            }
         });
 
@@ -788,7 +802,9 @@ class EditUser extends Component
         totallist2.map((Element, sindex) => {
            if(sindex === index)
            {
-              totallist2.splice(sindex,1)
+              // totallist2.splice(sindex,1)
+              delete totallist2[sindex]
+
            }
         });
 
@@ -811,7 +827,9 @@ class EditUser extends Component
         totallist3.map((Element, sindex) => {
            if(sindex === index)
            {
-              totallist3.splice(sindex,1)
+              // totallist3.splice(sindex,1)
+              delete totallist3[sindex]
+
            }
         });
 
