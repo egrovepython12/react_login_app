@@ -7,7 +7,7 @@ import {withRouter} from 'react-router-dom';
 import { edit_user } from "../actions/user_actions";
 import Users from "../components/users";
 import { Prompt } from 'react-router'
-
+import $ from 'jquery';
 
 class DocumentInput extends Component {
 
@@ -30,8 +30,7 @@ class DocumentInput extends Component {
     return <div>
         <input  type="text" name={this.props.name} refs={this.props.name} id={this.props.name} onChange={this.onFieldChange} value={this.props.value}/>
         <a onClick={this.props.addElement}><span className="glyphicon glyphicon-plus-sign"></span></a>
-        <a onClick={()=>this.props.removeElement(this.props.index,this.props.name)} name={this.props.name}><span className="glyphicon glyphicon-remove"></span>
-        </a>
+          {this.props.index?<a onClick={()=>this.props.removeElement(this.props.index,this.props.name)} name={this.props.name}><span className="glyphicon glyphicon-remove"></span></a>:""}
     </div>;
   }
 }
@@ -209,8 +208,7 @@ class EditUser extends Component
            }
       }
 
-      console.log(this.state.documents1,'documents11111111')
-      console.log(this.state.inputvaluesList1,'inputlistttttttttttttttt');
+
       let isEqual = function (value, other) {
 
         // Get the value type
@@ -297,9 +295,27 @@ class EditUser extends Component
             if(menu.checked && menu.text=="Menu1")
             {
               let submenu1_list ={}
+              let value1=[]
+              let count=0
+              $('#Menu1_lists div>input').each(function() {
+                  value1.push($(this).val());
+              });
+              for(let u=0;u<value1.length;u++)
+              {
+                if(value1[u]=="")
+                {
+                  count++;
+                }
+              }
+              console.log(count,'countttt')
               if(this.state.inputvaluesList1!=undefined)
               {
                 if(this.state.inputvaluesList1.length===0)
+                {
+                  formIsValid = false;
+                  errors["Menu1_submenus"] = "Submenu fields should not be left empty";
+                }
+                else if(count>0)
                 {
                   formIsValid = false;
                   errors["Menu1_submenus"] = "Submenu fields should not be left empty";
@@ -308,6 +324,7 @@ class EditUser extends Component
                 {
                   let value_type_status = this.handlesubmenuvalueValiadtion(this.state.inputvaluesList1)
                   let empty_value_status = this.handleemptysubmenuvalueValiadtion(this.state.inputvaluesList1)
+
                   if(empty_value_status)
                   {
                     formIsValid = false;
@@ -339,10 +356,27 @@ class EditUser extends Component
               if(menu.checked && menu.text=="Menu2")
               {
                   let submenu2_list={}
+                  let value2=[]
+                  let count=0
+                  $('#Menu2_lists div>input').each(function() {
+                      value2.push($(this).val());
+                  });
+                  for(let u=0;u<value2.length;u++)
+                  {
+                    if(value2[u]=="")
+                    {
+                      count++;
+                    }
+                  }
 
               if(this.state.inputvaluesList2!=undefined)
               {
                 if(this.state.inputvaluesList2.length===0)
+                {
+                  formIsValid = false;
+                  errors["Menu2_submenus"] = "Submenu fields should not be left empty";
+                }
+                else if(count>0)
                 {
                   formIsValid = false;
                   errors["Menu2_submenus"] = "Submenu fields should not be left empty";
@@ -382,9 +416,26 @@ class EditUser extends Component
               if(menu.checked && menu.text=="Menu3")
               {
                 let submenu3_list={}
+                let value3=[]
+                let count=0
+                $('#Menu3_lists div>input').each(function() {
+                    value3.push($(this).val());
+                });
+                for(let u=0;u<value3.length;u++)
+                {
+                  if(value3[u]=="")
+                  {
+                    count++;
+                  }
+                }
               if(this.state.inputvaluesList3!=undefined)
               {
                 if(this.state.inputvaluesList3.length===0)
+                {
+                  formIsValid = false;
+                  errors["Menu3_submenus"] = "Submenu fields should not be left empty";
+                }
+                else if(count>0)
                 {
                   formIsValid = false;
                   errors["Menu3_submenus"] = "Submenu fields should not be left empty";
@@ -523,7 +574,21 @@ class EditUser extends Component
       //append to array
       value.checked=true
       value.submenus = this.state.inputvaluesList
-
+      if(value.text=="Menu1"&& this.state.documents1.length==0)
+      {
+        let documents1=[DocumentInput]
+        this.setState({"documents1":documents1})
+      }
+      if(value.text=="Menu2"&& this.state.documents2.length==0)
+      {
+        let documents2=[DocumentInput]
+        this.setState({"documents2":documents2})
+      }
+      if(value.text=="Menu3"&& this.state.documents3.length==0)
+      {
+        let documents3=[DocumentInput]
+        this.setState({"documents3":documents3})
+      }
     }
     else{
 
@@ -555,11 +620,15 @@ class EditUser extends Component
 
   }
 
-  dynamictextChange(name,value)
+
+dynamictextChange(name,value)
   {
     let n_inputValuesList1=this.state.inputvaluesList1;
     let n_inputValuesList2=this.state.inputvaluesList2;
     let n_inputValuesList3=this.state.inputvaluesList3;
+    console.log(n_inputValuesList1,'n input list1')
+    console.log(n_inputValuesList2,'n input list2')
+    console.log(n_inputValuesList3,'n input list3')
 
     if(name.startsWith("submenu1"))
     {
@@ -570,12 +639,21 @@ class EditUser extends Component
       let inputvaluesList1=[];
       debugger;
 
-      if(name in n_inputValuesList1[0])
+      if(n_inputValuesList1!=[] && n_inputValuesList1.length>0)
       {
+        if(name in n_inputValuesList1[0])
+        {
         inputvaluesList1=[];
         n_inputValuesList1[0][name]=value
         inputValues1[name] = n_inputValuesList1[0][name]
         inputvaluesList1.push(inputValues1)
+        }
+        else
+        {
+          inputvaluesList1=[];
+          inputValues1[name]=value
+          inputvaluesList1.push(inputValues1)
+        }
       }
       else
       {
@@ -583,6 +661,7 @@ class EditUser extends Component
         inputValues1[name]=value
         inputvaluesList1.push(inputValues1)
       }
+
       let test1 = inputvaluesList1.concat(n_inputValuesList1)
       if(test1.length>0)
       {
@@ -621,7 +700,7 @@ class EditUser extends Component
 
       this.setState({inputValues1: inputValues1 ,inputvaluesList1:new_list1})
 
-}
+     }
     if(name.startsWith("submenu2"))
     {
           let inputValues2= {};
@@ -630,19 +709,31 @@ class EditUser extends Component
           let inputvaluesList2=[];
           debugger;
 
-          if(name in n_inputValuesList2[0])
+          if(n_inputValuesList2!=[] && n_inputValuesList2.length>0)
           {
-            inputvaluesList2=[];
-            n_inputValuesList2[0][name]=value
-            inputValues2[name] = n_inputValuesList2[0][name]
-            inputvaluesList2.push(inputValues2)
-          }
-          else
-          {
+            if(name in n_inputValuesList2[0])
+            {
+              inputvaluesList2=[];
+              n_inputValuesList2[0][name]=value
+              inputValues2[name] = n_inputValuesList2[0][name]
+              inputvaluesList2.push(inputValues2)
+            }
+            else {
+              inputvaluesList2=[];
+              inputValues2[name]=value
+              inputvaluesList2.push(inputValues2)
+
+            }
+
+        }
+         else
+         {
+
             inputvaluesList2=[];
             inputValues2[name]=value
             inputvaluesList2.push(inputValues2)
           }
+
           let test2 = inputvaluesList2.concat(n_inputValuesList2)
           if(test2.length>0)
           {
@@ -691,13 +782,22 @@ class EditUser extends Component
       let documents3=this.state.documents3;
       let inputvaluesList3=[];
       debugger;
-
-      if(name in n_inputValuesList3[0])
+      if(n_inputValuesList3!=[] && n_inputValuesList3.length>0)
       {
-        inputvaluesList3=[];
-        n_inputValuesList3[0][name]=value
-        inputValues3[name] = n_inputValuesList3[0][name]
-        inputvaluesList3.push(inputValues3)
+        if(name in n_inputValuesList3[0])
+        {
+          inputvaluesList3=[];
+          n_inputValuesList3[0][name]=value
+          inputValues3[name] = n_inputValuesList3[0][name]
+          inputvaluesList3.push(inputValues3)
+          inputvaluesList3 = n_inputValuesList3
+        }
+        else
+        {
+          inputvaluesList3=[];
+          inputValues3[name]=value
+          n_inputValuesList3.push(inputValues3)
+        }
       }
       else
       {
@@ -745,6 +845,7 @@ class EditUser extends Component
       this.setState({inputValues3: inputValues3 ,inputvaluesList3:new_list3})
     }
   }
+
 
   addElement(event)
    {
@@ -858,6 +959,7 @@ class EditUser extends Component
 
   displaysubmenus(index)
   {
+
     let documents1 = this.state.documents1.map((valueslist,sindex) => {
       if(valueslist['props'])
       {
@@ -868,7 +970,7 @@ class EditUser extends Component
             }
       }
       else {
-          let name = `submenu1-${sindex}`
+          let name = `submenu11-${sindex}`
           return (<DocumentInput  index={ sindex } removeElement={this.removeElement}  addElement={this.addElement}
                                   dynamictextChange ={this.dynamictextChange} name={name}  />)
 
@@ -888,7 +990,7 @@ class EditUser extends Component
       }
       else
       {
-        let name = `submenu2-${sindex}`
+        let name = `submenu21-${sindex}`
         return (<DocumentInput  index={ sindex } removeElement={this.removeElement}  addElement={this.addElement}
                    dynamictextChange ={this.dynamictextChange}  name={name}/>)
 
@@ -907,7 +1009,7 @@ class EditUser extends Component
       }
       else {
 
-        let name = `submenu3-${sindex}`
+        let name = `submenu31-${sindex}`
         return (<DocumentInput  index={ sindex } removeElement={this.removeElement}  addElement={this.addElement}
                    dynamictextChange ={this.dynamictextChange} name={name}/>)
       }

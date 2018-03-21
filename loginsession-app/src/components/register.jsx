@@ -12,6 +12,10 @@ class DocumentInput extends Component {
 
  constructor (props) {
       super(props);
+      this.state = {
+
+            inputvalue:'',
+        },
       this.onFieldChange = this.onFieldChange.bind(this);
   }
 
@@ -26,12 +30,12 @@ class DocumentInput extends Component {
 
   render() {
 
-    return <div><input
+    return <div id={this.props.name}><input
       type="text"
       name={this.props.name} refs={this.props.name} id={this.props.name} onChange={this.onFieldChange} />
         <a onClick={this.props.addElement}><span className="glyphicon glyphicon-plus-sign"></span></a>
-        <a onClick={()=>this.props.removeElement(this.props.index,this.props.name)} name={this.props.name}><span className="glyphicon glyphicon-remove"></span>
-        </a></div>;
+          {this.props.index?<a onClick={()=>this.props.removeElement(this.props.index,this.props.name)} name={this.props.name}><span className="glyphicon glyphicon-remove"></span></a>:""}
+        </div>;
   }
 }
 
@@ -100,6 +104,7 @@ class Register extends Component
   handleValidation()
   {
       let fields = this.state.fields;
+
       let elements = [
         { text: 'Menu1','url':'/menu1',checked:false,submenus:''},
         { text: 'Menu2','url':'/menu2',checked:false,submenus:''},
@@ -108,6 +113,8 @@ class Register extends Component
       let errors = {};
       let formIsValid = true;
       console.log(this.state.documents1,'documents!')
+
+
       let isEqual = function (value, other) {
 
         // Get the value type
@@ -230,9 +237,26 @@ class Register extends Component
             if(menu.checked && menu.text=="Menu1")
             {
               let submenu1_list ={}
+              let value1=[]
+              let count=0
+              $('#Menu1_lists div>input').each(function() {
+                  value1.push($(this).val());
+              });
+              for(let u=0;u<value1.length;u++)
+              {
+                if(value1[u]=="")
+                {
+                  count++;
+                }
+              }
               if(this.state.inputvaluesList1!=undefined)
               {
                 if(this.state.inputvaluesList1.length===0)
+                {
+                  formIsValid = false;
+                  errors["Menu1_submenus"] = "Submenu fields should not be left empty";
+                }
+                else if(count>0)
                 {
                   formIsValid = false;
                   errors["Menu1_submenus"] = "Submenu fields should not be left empty";
@@ -272,10 +296,27 @@ class Register extends Component
               if(menu.checked && menu.text=="Menu2")
               {
                   let submenu2_list={}
+                  let value2=[]
+                  let count=0
+                  $('#Menu2_lists div>input').each(function() {
+                      value2.push($(this).val());
+                  });
+                  for(let u=0;u<value2.length;u++)
+                  {
+                    if(value2[u]=="")
+                    {
+                      count++;
+                    }
+                  }
 
               if(this.state.inputvaluesList2!=undefined)
               {
                 if(this.state.inputvaluesList2.length===0)
+                {
+                  formIsValid = false;
+                  errors["Menu2_submenus"] = "Submenu fields should not be left empty";
+                }
+                else if(count>0)
                 {
                   formIsValid = false;
                   errors["Menu2_submenus"] = "Submenu fields should not be left empty";
@@ -315,9 +356,26 @@ class Register extends Component
               if(menu.checked && menu.text=="Menu3")
               {
                 let submenu3_list={}
+                let value3=[]
+                let count=0
+                $('#Menu3_lists div>input').each(function() {
+                    value3.push($(this).val());
+                });
+                for(let u=0;u<value3.length;u++)
+                {
+                  if(value3[u]=="")
+                  {
+                    count++;
+                  }
+              }
               if(this.state.inputvaluesList3!=undefined)
               {
                 if(this.state.inputvaluesList3.length===0)
+                {
+                  formIsValid = false;
+                  errors["Menu3_submenus"] = "Submenu fields should not be left empty";
+                }
+                else if(count>0)
                 {
                   formIsValid = false;
                   errors["Menu3_submenus"] = "Submenu fields should not be left empty";
@@ -395,14 +453,11 @@ class Register extends Component
    {
       let valuetypemismatch = false ;
       inputArray.map(function(item) {
-        console.log(item,'itemmm')
         let value=Object.values(item);
-        console.log(value,'valueeeeeeeeee')
         for(let i=0;i<value.length;i++)
         {
            if(value[i]=="")
            {
-             console.log('sdjhdjshdj')
               valuetypemismatch=true
            }
         }
@@ -434,6 +489,7 @@ class Register extends Component
       let b=a.parentNode
       let c=b.parentNode
       let target_id=c.id
+
       if(target_id==="Menu1_lists")
       {
         const documents1 = this.state.documents1.concat(DocumentInput);
@@ -462,8 +518,8 @@ class Register extends Component
         totallist1.map((Element, sindex) => {
            if(sindex === index)
            {
-            totallist1.splice(sindex,1)
-            
+             delete totallist1[sindex]
+
            }
         });
 
@@ -486,7 +542,7 @@ class Register extends Component
         totallist2.map((Element, sindex) => {
            if(sindex === index)
            {
-              totallist2.splice(sindex,1)
+             delete totallist2[sindex]
            }
         });
 
@@ -509,7 +565,7 @@ class Register extends Component
         totallist3.map((Element, sindex) => {
            if(sindex === index)
            {
-              totallist3.splice(sindex,1)
+             delete totallist3[sindex]
            }
         });
 
@@ -533,6 +589,7 @@ class Register extends Component
    //dynamic textbox field chnage
    dynamictextChange(name,value)
   {
+    console.log(name,'nameeeeeeee')
     if(name.startsWith("submenu1"))
     {
       let inputValues1= this.state.inputValues1;
@@ -541,6 +598,13 @@ class Register extends Component
       inputvaluesList1.push(inputValues1)
       this.setState({inputValues1: inputValues1 ,
                     inputvaluesList1:inputvaluesList1})
+
+
+      // });
+      // console.log(inputvaluesList1,'inputvaluelisty')
+      // // inputValues1[name]=value
+      // // inputvaluesList1.push(inputValues1)
+      // this.setState({ inputvaluesList1:inputvaluesList1})
     }
     if(name.startsWith("submenu2"))
     {
@@ -579,6 +643,7 @@ class Register extends Component
   updateStateList(e, value,index){
     let fields=this.state.fields;
     let array = this.state.elements;
+
 
     if (e.target.checked)
     {

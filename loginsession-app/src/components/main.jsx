@@ -10,6 +10,7 @@ import {
 import {withRouter} from 'react-router-dom';
 import { connect } from "react-redux";
 import { get_user } from "../actions/user_actions";
+import Module from "../components/module";
 
 
 class Main extends Component {
@@ -19,7 +20,9 @@ class Main extends Component {
       menus:{},
       showsubmenustatus1:false,
       showsubmenustatus2:false,
-      showsubmenustatus3:false
+      showsubmenustatus3:false,
+      showsubmenucontent:true,
+      submenuvalue:""
 
     }
 
@@ -28,6 +31,7 @@ class Main extends Component {
     this.getmenus = this.getmenus.bind(this);
     this.showmenus=this.showmenus.bind(this);
     this.hidemenus=this.hidemenus.bind(this);
+    this.submenucontentdisplay = this.submenucontentdisplay.bind(this);
   }
 
   componentDidMount()
@@ -78,9 +82,17 @@ class Main extends Component {
   }
 
 
+  submenucontentdisplay(event)
+  {
+    console.log(event.target.parentNode.id,'event target')
+    this.setState({submenuvalue:event.target.parentNode.id});
+
+  }
+
 
   getmenus(menus)
   {
+    console.log(this.state.showsubmenucontent,'showsubmenucontent')
     return <nav className="navbar navbar-default">
               <div className="container-fluid">
                 <div className="navbar-brand">
@@ -91,12 +103,12 @@ class Main extends Component {
                   {menus.map((item, i) =>{
                     if(item.checked && item.text ==="Menu1")
                     {
-                      if(item.submenus.length==0)
+                      if(item.submenus!=undefined && item.submenus.length==0)
                       {
                         return <li key={i} className={window.location.pathname===item.url?"active":"default"}>
                               <NavLink to={item.url}>{item.text}</NavLink></li>
                       }
-                      else(item.submenus.length>0)
+                      else(item.submenus!=undefined && item.submenus.length>0)
                       {
                         let submenus ='';
 
@@ -106,11 +118,13 @@ class Main extends Component {
 
 
                           submenus = value.map((smenu) =>{
-                                            return <a key={smenu}>{smenu}</a>
-                                        });
+                                            // return <a key={smenu}>{smenu}</a>
+                                              return <li id={smenu} key={smenu} onClick={this.submenucontentdisplay}>
+                                                  <NavLink to={smenu}>{smenu}</NavLink></li>
+                                        },this);
 
 
-                        });
+                        },this);
                           return <li className={"dropdown "+(window.location.pathname===item.url ? 'active' : 'default')} id={item.text+'_list'} onMouseEnter={this.showmenus} onMouseLeave={this.hidemenus}>
                                           <NavLink to={item.url}>{item.text} <span className="caret"></span></NavLink>
                                               {this.state.showsubmenustatus1?<div className="dropdown-content">
@@ -139,11 +153,12 @@ class Main extends Component {
 
 
                           submenus = value.map((smenu) =>{
-                                            return <a key={smenu}>{smenu}</a>
-                                        });
+                            return <li id={smenu} key={smenu} onClick={this.submenucontentdisplay} >
+                                  <NavLink to={smenu}>{smenu}</NavLink></li>
+                      },this);
 
 
-                        });
+                    },this);
                           return <li className={"dropdown "+(window.location.pathname===item.url ? 'active' : 'default')} id={item.text+'_list'} onMouseEnter={this.showmenus} onMouseLeave={this.hidemenus}>
                                           <NavLink to={item.url}>{item.text} <span className="caret"></span></NavLink>
                                               {this.state.showsubmenustatus2?<div className="dropdown-content">
@@ -172,16 +187,18 @@ class Main extends Component {
 
 
                           submenus = value.map((smenu) =>{
-                                            return <a key={smenu}>{smenu}</a>
-                                        });
+                                            // return <a key={smenu}>{smenu}</a>
+                                            return <li id={smenu} key={smenu} onClick={this.submenucontentdisplay}>
+                                                  <NavLink to={smenu}>{smenu}</NavLink></li>
+                                      },this);
 
 
-                        });
+                        },this);
                           return <li className={"dropdown "+(window.location.pathname===item.url ? 'active' : 'default')} id={item.text+'_list'} onMouseEnter={this.showmenus} onMouseLeave={this.hidemenus}>
                                           <NavLink to={item.url}>{item.text} <span className="caret"></span></NavLink>
                                               {this.state.showsubmenustatus3?<div className="dropdown-content">
                                                 {submenus}
-                                              </div>:<div></div>}
+                                            </div>:<div></div>}
 
                                   </li>
                       }
