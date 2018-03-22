@@ -970,7 +970,19 @@ dynamictextChange(name,value)
             }
       }
       else {
-          let name = `submenu11-${sindex+1}`
+          // let keys = Object.keys(valueslist);
+          // let last = keys.slice(-2);
+          // console.log( this.state.documents1[this.state.documents1.length - 2].props.name,'lasttttt')
+          // console.log(this.state.documents1[this.state.documents1.length -2],'ashagshags')
+          // console.log(this.state.documents1,'docuemmtd')
+          let lastindex =0;
+          if(this.state.documents1[0].props && this.state.documents1[0].props.name!=undefined)
+          {
+            lastindex = this.state.documents1[0].props.name.slice(-1)[0]
+          }
+          // console.log(lastindex,'lastinds')
+          // console.log(sindex,'sindexxxxxxxx')
+          let name = `submenu11-{${lastindex}+${sindex}}`
           return (<DocumentInput  index={ sindex } removeElement={this.removeElement}  addElement={this.addElement}
                                   dynamictextChange ={this.dynamictextChange} name={name}  />)
 
@@ -990,14 +1002,21 @@ dynamictextChange(name,value)
       }
       else
       {
-        let name = `submenu22-${sindex+1}`
+        let lastindex =0;
+        if(this.state.documents2[0].props && this.state.documents2[0].props.name!=undefined)
+        {
+          lastindex= this.state.documents2[0].props.name.slice(-1)[0]
+
+        }
+
+        let name = `submenu22-{${lastindex}+${sindex}}`
         return (<DocumentInput  index={ sindex } removeElement={this.removeElement}  addElement={this.addElement}
                    dynamictextChange ={this.dynamictextChange}  name={name}/>)
 
       }
     });
 
-    let documents3 = this.state.documents3.map((valueslist,sindex) => {
+      let documents3 = this.state.documents3.map((valueslist,sindex) => {
       if(valueslist['props'])
       {
         for (let [key, value, index] of Object.entries(valueslist)) {
@@ -1008,8 +1027,13 @@ dynamictextChange(name,value)
               }
       }
       else {
+        let lastindex =0;
+        if(this.state.documents3[0].props && this.state.documents3[0].props.name!=undefined)
+        {
+          lastindex = this.state.documents3[0].props.name.slice(-1)[0]
+        }
 
-        let name = `submenu33-${sindex+1}`
+        let name = `submenu33-{${lastindex}+${sindex}}`
         return (<DocumentInput  index={ sindex } removeElement={this.removeElement}  addElement={this.addElement}
                    dynamictextChange ={this.dynamictextChange} name={name}/>)
       }

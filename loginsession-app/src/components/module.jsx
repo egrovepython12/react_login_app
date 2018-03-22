@@ -7,21 +7,9 @@ import { connect } from "react-redux";
 class Module extends Component {
   constructor(props) {
     super(props);
-    console.log(props);
-    debugger;
-    // console.log(this.props.location.pathname,'props data')
-    // this.state = {
-    //   "pathvalue":""
-    //
-		// }
+
   }
-  //
-  // componentDidMount()
-  // {
-  //   let path =this.props.location.pathname;
-  //   let pathvalue= path.split("/").slice(-1)[0];
-  //   this.setState({"pathvalue":pathvalue})
-  // }
+
 
   render() {
     return (
