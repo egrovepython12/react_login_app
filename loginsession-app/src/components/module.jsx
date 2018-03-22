@@ -15,7 +15,7 @@ class Module extends Component {
     return (
       <div>
       <Main/>
-        <h2>Welcome to {this.props.match.params.id} Compoenent</h2>
+        <h2>Welcome to {this.props.match.params.id} Component</h2>
       </div>
     );
   }

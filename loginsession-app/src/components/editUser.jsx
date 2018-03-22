@@ -980,9 +980,10 @@ dynamictextChange(name,value)
           {
             lastindex = this.state.documents1[0].props.name.slice(-1)[0]
           }
-          // console.log(lastindex,'lastinds')
-          // console.log(sindex,'sindexxxxxxxx')
-          let name = `submenu11-{${lastindex}+${sindex}}`
+          console.log(lastindex,'lastinds')
+          console.log(sindex,'sindexxxxxxxx')
+          let totalindex = sindex+lastindex
+          let name = `submenu11-{${totalindex}}`
           return (<DocumentInput  index={ sindex } removeElement={this.removeElement}  addElement={this.addElement}
                                   dynamictextChange ={this.dynamictextChange} name={name}  />)
 
@@ -1009,7 +1010,9 @@ dynamictextChange(name,value)
 
         }
 
-        let name = `submenu22-{${lastindex}+${sindex}}`
+        let totalindex=sindex+lastindex
+        console.log(totalindex,'totalindexxxxx')
+        let name = `submenu22-{${totalindex}}`
         return (<DocumentInput  index={ sindex } removeElement={this.removeElement}  addElement={this.addElement}
                    dynamictextChange ={this.dynamictextChange}  name={name}/>)
 
@@ -1032,8 +1035,10 @@ dynamictextChange(name,value)
         {
           lastindex = this.state.documents3[0].props.name.slice(-1)[0]
         }
+        let totalindex=sindex+lastindex
+        console.log(totalindex,'totalindexxxxx')
 
-        let name = `submenu33-{${lastindex}+${sindex}}`
+        let name = `submenu33-{${totalindex}}`
         return (<DocumentInput  index={ sindex } removeElement={this.removeElement}  addElement={this.addElement}
                    dynamictextChange ={this.dynamictextChange} name={name}/>)
       }
