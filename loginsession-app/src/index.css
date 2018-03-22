@@ -57,3 +57,12 @@ body {
     display: block;
     text-align: left;
 }
+
+
+.dropdown:hover .dropdown-content {
+   display: block !important;
+}
+
+.dropdown .dropdown-content {
+   display: none !important;
+}

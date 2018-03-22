@@ -29,8 +29,8 @@ class Main extends Component {
     this.handlelogout = this.handlelogout.bind(this);
     this.handlemenus = this.handlemenus.bind(this);
     this.getmenus = this.getmenus.bind(this);
-    this.showmenus=this.showmenus.bind(this);
-    this.hidemenus=this.hidemenus.bind(this);
+    // this.showmenus=this.showmenus.bind(this);
+    // this.hidemenus=this.hidemenus.bind(this);
     this.submenucontentdisplay = this.submenucontentdisplay.bind(this);
   }
 
@@ -44,47 +44,47 @@ class Main extends Component {
   {
     this.props.LoginSuccess('',false);
   }
-
-  showmenus(event)
-  {
-    let a=event.target.parentNode.id
-
-    if(a==="Menu1_list")
-    {
-      this.setState({showsubmenustatus1: true});
-    }
-    if(a==="Menu2_list")
-    {
-      this.setState({showsubmenustatus2: true});
-    }
-    if(a==="Menu3_list")
-    {
-      this.setState({showsubmenustatus3: true});
-    }
-  }
-
-  hidemenus(event)
-  {
-    let a=event.target.parentNode.id
-
-    if(a==="Menu1_list")
-    {
-      this.setState({showsubmenustatus1: false});
-    }
-    if(a==="Menu2_list")
-    {
-      this.setState({showsubmenustatus2: false});
-    }
-    if(a==="Menu3_list")
-    {
-      this.setState({showsubmenustatus3: false});
-    }
-  }
+  //
+  // showmenus(event)
+  // {
+  //   let a=event.target.parentNode.id
+  //   console.log(a,'targett')
+  //   if(a==="Menu1_list")
+  //   {
+  //     this.setState({showsubmenustatus1: true});
+  //   }
+  //   if(a==="Menu2_list")
+  //   {
+  //     this.setState({showsubmenustatus2: true});
+  //   }
+  //   if(a==="Menu3_list")
+  //   {
+  //     this.setState({showsubmenustatus3: true});
+  //   }
+  // }
+  //
+  // hidemenus(event)
+  // {
+  //   let a=event.target.parentNode.id
+  //   // console.log(a,'targett')
+  //
+  //   if(a==="Menu1_list")
+  //   {
+  //     this.setState({showsubmenustatus1: false});
+  //   }
+  //   if(a==="Menu2_list")
+  //   {
+  //     this.setState({showsubmenustatus2: false});
+  //   }
+  //   if(a==="Menu3_list")
+  //   {
+  //     this.setState({showsubmenustatus3: false});
+  //   }
+  // }
 
 
   submenucontentdisplay(event)
   {
-    console.log(event.target.parentNode.id,'event target')
     this.setState({submenuvalue:event.target.parentNode.id});
 
   }
@@ -119,17 +119,17 @@ class Main extends Component {
 
                           submenus = value.map((smenu) =>{
                                             // return <a key={smenu}>{smenu}</a>
-                                              return <li id={smenu} key={smenu} onClick={this.submenucontentdisplay}>
-                                                  <NavLink to={smenu}>{smenu}</NavLink></li>
+                                              return <li id={smenu} key={smenu}>
+                                                  <NavLink exact={true} to={smenu}>{smenu}</NavLink></li>
                                         },this);
 
 
                         },this);
-                          return <li className={"dropdown "+(window.location.pathname===item.url ? 'active' : 'default')} id={item.text+'_list'} onMouseEnter={this.showmenus} onMouseLeave={this.hidemenus}>
+                          return <li className={"dropdown "+(window.location.pathname===item.url ? 'active' : 'default')} id={item.text+'_list'} >
                                           <NavLink to={item.url}>{item.text} <span className="caret"></span></NavLink>
-                                              {this.state.showsubmenustatus1?<div className="dropdown-content">
+                                              <div className="dropdown-content">
                                                 {submenus}
-                                              </div>:<div></div>}
+                                              </div>
 
                                   </li>
                       }
@@ -153,17 +153,17 @@ class Main extends Component {
 
 
                           submenus = value.map((smenu) =>{
-                            return <li id={smenu} key={smenu} onClick={this.submenucontentdisplay} >
+                            return <li id={smenu} key={smenu}>
                                   <NavLink to={smenu}>{smenu}</NavLink></li>
                       },this);
 
 
                     },this);
-                          return <li className={"dropdown "+(window.location.pathname===item.url ? 'active' : 'default')} id={item.text+'_list'} onMouseEnter={this.showmenus} onMouseLeave={this.hidemenus}>
+                          return <li className={"dropdown "+(window.location.pathname===item.url ? 'active' : 'default')} id={item.text+'_list'}>
                                           <NavLink to={item.url}>{item.text} <span className="caret"></span></NavLink>
-                                              {this.state.showsubmenustatus2?<div className="dropdown-content">
+                                              <div className="dropdown-content">
                                                 {submenus}
-                                              </div>:<div></div>}
+                                              </div>
 
                                   </li>
                       }
@@ -188,17 +188,19 @@ class Main extends Component {
 
                           submenus = value.map((smenu) =>{
                                             // return <a key={smenu}>{smenu}</a>
-                                            return <li id={smenu} key={smenu} onClick={this.submenucontentdisplay}>
+                                            // <li id={smenu} key={smenu}>
+                                            //      <NavLink to={`details/${smenu}`}>{smenu}</NavLink></li>
+                                            return <li id={smenu} key={smenu}>
                                                   <NavLink to={smenu}>{smenu}</NavLink></li>
                                       },this);
 
 
                         },this);
-                          return <li className={"dropdown "+(window.location.pathname===item.url ? 'active' : 'default')} id={item.text+'_list'} onMouseEnter={this.showmenus} onMouseLeave={this.hidemenus}>
+                          return <li className={"dropdown "+(window.location.pathname===item.url ? 'active' : 'default')} id={item.text+'_list'}>
                                           <NavLink to={item.url}>{item.text} <span className="caret"></span></NavLink>
-                                              {this.state.showsubmenustatus3?<div className="dropdown-content">
+                                            <div className="dropdown-content">
                                                 {submenus}
-                                            </div>:<div></div>}
+                                            </div>
 
                                   </li>
                       }

@@ -18,10 +18,11 @@ import Menu3 from "../components/menu3";
 import PrivateRoute from "../routes/privateroute";
 import PublicRoute from "../routes/publicroute";
 import BasicTable from "../components/test";
+import Module from "../components/module";
 
 class Routing extends Component {
   render() {
-    
+
     return (
       <BrowserRouter>
         <Switch>
@@ -34,6 +35,7 @@ class Routing extends Component {
             <PrivateRoute exact path="/menu1" component={Menu1}/>
             <PrivateRoute exact path="/menu2" component={Menu2}/>
             <PrivateRoute exact path="/menu3" component={Menu3}/>
+            <PrivateRoute exact={true} path="/:id" component={Module}/>
         </Switch>
       </BrowserRouter>
     );

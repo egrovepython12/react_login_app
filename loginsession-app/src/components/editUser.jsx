@@ -632,12 +632,12 @@ dynamictextChange(name,value)
 
     if(name.startsWith("submenu1"))
     {
-      debugger;
+
       let inputValues1= {};
       let new_list1=[];
       let documents1=this.state.documents1;
       let inputvaluesList1=[];
-      debugger;
+
 
       if(n_inputValuesList1!=[] && n_inputValuesList1.length>0)
       {
@@ -707,7 +707,7 @@ dynamictextChange(name,value)
           let new_list2=[];
           let documents2=this.state.documents2;
           let inputvaluesList2=[];
-          debugger;
+
 
           if(n_inputValuesList2!=[] && n_inputValuesList2.length>0)
           {
@@ -781,7 +781,7 @@ dynamictextChange(name,value)
       let new_list3=[];
       let documents3=this.state.documents3;
       let inputvaluesList3=[];
-      debugger;
+
       if(n_inputValuesList3!=[] && n_inputValuesList3.length>0)
       {
         if(name in n_inputValuesList3[0])
@@ -853,6 +853,7 @@ dynamictextChange(name,value)
       let b=a.parentNode
       let c=b.parentNode
       let target_id=c.id
+
       if(target_id==="Menu1_lists")
       {
         let documents1 = this.state.documents1.concat(DocumentInput);
@@ -964,13 +965,12 @@ dynamictextChange(name,value)
       if(valueslist['props'])
       {
         for (let [key, value, index] of Object.entries(valueslist)) {
-          console.log(sindex,'indexxxxxxxxxx')
             return(<DocumentInput  index={sindex } removeElement={this.removeElement}  addElement={this.addElement}
                                   name={valueslist.props.name} dynamictextChange ={this.dynamictextChange} value={valueslist.props.value} />)
             }
       }
       else {
-          let name = `submenu11-${sindex}`
+          let name = `submenu11-${sindex+1}`
           return (<DocumentInput  index={ sindex } removeElement={this.removeElement}  addElement={this.addElement}
                                   dynamictextChange ={this.dynamictextChange} name={name}  />)
 
@@ -990,7 +990,7 @@ dynamictextChange(name,value)
       }
       else
       {
-        let name = `submenu21-${sindex}`
+        let name = `submenu22-${sindex+1}`
         return (<DocumentInput  index={ sindex } removeElement={this.removeElement}  addElement={this.addElement}
                    dynamictextChange ={this.dynamictextChange}  name={name}/>)
 
@@ -1009,7 +1009,7 @@ dynamictextChange(name,value)
       }
       else {
 
-        let name = `submenu31-${sindex}`
+        let name = `submenu33-${sindex+1}`
         return (<DocumentInput  index={ sindex } removeElement={this.removeElement}  addElement={this.addElement}
                    dynamictextChange ={this.dynamictextChange} name={name}/>)
       }
@@ -1036,10 +1036,6 @@ dynamictextChange(name,value)
     <div>
 
            <Main/>
-          {/*<Prompt
-              when={this.props.loginReducer.isloggedin}
-              message='You have unsaved changes, are you sure you want to leave?'
-              />*/}
            	<div className="container">
       		  <h2>Edit Profile</h2>
       			<form onSubmit={this.handleUpdate}>
