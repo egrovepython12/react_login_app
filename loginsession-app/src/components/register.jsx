@@ -703,6 +703,7 @@ class Register extends Component
 
   dynamictextbox_creation(index)
   {
+    console.log(this.state.documentslist,'docuemntsssssslist')
     const doc_name_test = `documents-${index}`
     let arr = this.state.documentslist;
     let documents =''
