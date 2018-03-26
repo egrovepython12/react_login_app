@@ -7,6 +7,7 @@ import { connect } from "react-redux";
 import { register_user } from "../actions/user_actions";
 import toastr from 'toastr';
 import $ from 'jquery';
+import menus from '../components/menus.json';
 
 class DocumentInput extends Component {
 
@@ -48,14 +49,11 @@ class Register extends Component
           fields: {'role':'user',
           menus:[],
       },
-      elements: [
-        { text: 'Menu1','url':'/menu1',checked:false,submenus:''},
-        { text: 'Menu2','url':'/menu2',checked:false,submenus:''},
-        { text: 'Menu3','url':'/menu3',checked:false,submenus:''}
-      ],
-      documents1:[DocumentInput],
-      documents2:[DocumentInput],
-      documents3:[DocumentInput],
+      elements: menus,
+      documentslist:[],
+      documents1:[],
+      documents2:[],
+      documents3:[],
       inputValues1:{},
       inputValues2:{},
       inputValues3:{},
@@ -88,6 +86,22 @@ class Register extends Component
       this.props.history.push('/login')
     }
 
+  }
+
+  componentDidMount()
+  {
+    let documentslist = this.state.documentslist;
+    this.state.elements.map((Element, index) => {
+      let input_list={}
+      const doc_name = `documents-${index}`
+      input_list['name'] = doc_name
+      input_list['value'] = [DocumentInput]
+      documentslist.push(input_list)
+
+    });
+    this.setState({
+        documentslist: update(documentslist,{$set:documentslist})
+    });
   }
 
   //handles the change event for all fields of register form
@@ -523,15 +537,27 @@ class Register extends Component
            }
         });
 
-        let update_inputlist1 =this.state.inputvaluesList1;
-        update_inputlist1.map((objlist,index) => {
-          for(let[key,value] of Object.entries(objlist)) {
-                if (key===name) {
-                  delete objlist[key];
-                }
-          }
-        });
 
+
+      totallist1.map((Element, index) => {
+          const name = `submenu1-${index}`
+          console.log(index,'nameeeeeeee')
+          console.log('entry success')
+          return <Element ref={'Element-'+index} key={ index } index={ index } removeElement={this.removeElement}
+           addElement={this.addElement} name={name} dynamictextChange ={this.dynamictextChange}/>
+      });
+
+      let update_inputlist1 =this.state.inputvaluesList1;
+      update_inputlist1.map((objlist,index) => {
+        for(let[key,value] of Object.entries(objlist)) {
+              if (key===name) {
+                console.log(name,'naem,')
+                delete objlist[key];
+              }
+        }
+      });
+
+        console.log(update_inputlist1,'updateinputlist1')
 
         this.setState({documents1:totallist1,inputvaluesList1:update_inputlist1});
 
@@ -600,11 +626,7 @@ class Register extends Component
                     inputvaluesList1:inputvaluesList1})
 
 
-      // });
-      // console.log(inputvaluesList1,'inputvaluelisty')
-      // // inputValues1[name]=value
-      // // inputvaluesList1.push(inputValues1)
-      // this.setState({ inputvaluesList1:inputvaluesList1})
+
     }
     if(name.startsWith("submenu2"))
     {
@@ -681,40 +703,23 @@ class Register extends Component
 
   dynamictextbox_creation(index)
   {
-      const documents1 = this.state.documents1.map((Element, index) => {
-      const name = `submenu1-${index}`
-      return <Element ref={'Element-'+index} key={ index } index={ index } removeElement={this.removeElement}
-       addElement={this.addElement}
-       name={name} dynamictextChange ={this.dynamictextChange}/>
-    });
+    const doc_name_test = `documents-${index}`
+    let arr = this.state.documentslist;
+    let documents =''
+    let obj = arr.find((o, i) => {
+      if(index ==i)
+      {
+        documents = this.state.documentslist[i].value.map((Element, index) => {
+              const name = `submenu-${arr[i].name}-${index}`
+              console.log(name,'naem valuee')
+              return <Element ref={'Element-'+index} key={ index } index={ index } removeElement={this.removeElement}
+               addElement={this.addElement}  name={name} dynamictextChange ={this.dynamictextChange}/>
 
-    const documents2 = this.state.documents2.map((Element, index) => {
-      const name = `submenu2-${index}`
-      return <Element ref={'Element-'+index} key={ index } index={ index } removeElement={this.removeElement}
-       addElement={this.addElement}
-       name={name} dynamictextChange ={this.dynamictextChange}/>
-    });
-
-    const documents3 = this.state.documents3.map((Element, index) => {
-      const name = `submenu3-${index}`
-      return <Element ref={'Element-'+index} key={ index } index={ index } removeElement={this.removeElement}
-       addElement={this.addElement}
-       name={name} dynamictextChange ={this.dynamictextChange}/>
-    });
-
-    if(index==0)
-    {
-      return documents1
-    }
-    if(index ==1)
-    {
-      return documents2
-    }
-    if(index ==2)
-    {
-      return documents3
-    }
-
+       })
+       console.log(documents,'documentssssss value')
+       return documents
+     }
+    })
   }
 
   render() {

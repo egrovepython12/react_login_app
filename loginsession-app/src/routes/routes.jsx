@@ -19,6 +19,8 @@ import PrivateRoute from "../routes/privateroute";
 import PublicRoute from "../routes/publicroute";
 import BasicTable from "../components/test";
 import Module from "../components/module";
+import SortableComponent from "../components/dragmenu";
+
 
 class Routing extends Component {
   render() {
@@ -27,6 +29,7 @@ class Routing extends Component {
       <BrowserRouter>
         <Switch>
             <PublicRoute exact path="/" component={Home}/>
+            <PublicRoute exact path="/drag" component={SortableComponent}/>
             <PublicRoute exact path="/register" component={Register}/>
             <PublicRoute exact path="/login" component={Login}/>
             <PublicRoute exact path="/test" component={BasicTable}/>

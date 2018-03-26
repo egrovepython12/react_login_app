@@ -17,20 +17,12 @@ class Main extends Component {
   constructor(props) {
     super(props);
     this.state={
-      menus:{},
-      showsubmenustatus1:false,
-      showsubmenustatus2:false,
-      showsubmenustatus3:false,
-      showsubmenucontent:true,
-      submenuvalue:""
-
+      menus:{}
     }
 
     this.handlelogout = this.handlelogout.bind(this);
     this.handlemenus = this.handlemenus.bind(this);
     this.getmenus = this.getmenus.bind(this);
-    // this.showmenus=this.showmenus.bind(this);
-    // this.hidemenus=this.hidemenus.bind(this);
     this.submenucontentdisplay = this.submenucontentdisplay.bind(this);
   }
 
@@ -44,43 +36,6 @@ class Main extends Component {
   {
     this.props.LoginSuccess('',false);
   }
-  //
-  // showmenus(event)
-  // {
-  //   let a=event.target.parentNode.id
-  //   console.log(a,'targett')
-  //   if(a==="Menu1_list")
-  //   {
-  //     this.setState({showsubmenustatus1: true});
-  //   }
-  //   if(a==="Menu2_list")
-  //   {
-  //     this.setState({showsubmenustatus2: true});
-  //   }
-  //   if(a==="Menu3_list")
-  //   {
-  //     this.setState({showsubmenustatus3: true});
-  //   }
-  // }
-  //
-  // hidemenus(event)
-  // {
-  //   let a=event.target.parentNode.id
-  //   // console.log(a,'targett')
-  //
-  //   if(a==="Menu1_list")
-  //   {
-  //     this.setState({showsubmenustatus1: false});
-  //   }
-  //   if(a==="Menu2_list")
-  //   {
-  //     this.setState({showsubmenustatus2: false});
-  //   }
-  //   if(a==="Menu3_list")
-  //   {
-  //     this.setState({showsubmenustatus3: false});
-  //   }
-  // }
 
 
   submenucontentdisplay(event)
@@ -92,7 +47,6 @@ class Main extends Component {
 
   getmenus(menus)
   {
-    console.log(this.state.showsubmenucontent,'showsubmenucontent')
     return <nav className="navbar navbar-default">
               <div className="container-fluid">
                 <div className="navbar-brand">
@@ -299,12 +253,3 @@ function mapStateToProps(state){
   }
 }
 export default withRouter(connect(mapStateToProps,{get_user})(Main));
-
-
-// export default withRouter(connect((state) => {
-//   const loginReducer = state.loginReducer
-//   return {
-//     loginReducer
-//   };
-
-// })(Main));

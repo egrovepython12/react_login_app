@@ -7,7 +7,7 @@ import {withRouter} from 'react-router-dom';
 import { login_user } from "../actions/user_actions";
 
 
-class Login extends Component 
+class Login extends Component
 {
   constructor(props) {
     super(props)
@@ -19,9 +19,10 @@ class Login extends Component
 		this.handlelogin = this.handlelogin.bind(this);
     this.handleValidation = this.handleValidation.bind(this);
   	}
-  
+
   componentWillReceiveProps(nextProps)
   {
+    console.log(nextProps,'nextProspppppp')
     if(nextProps.loginReducer.isloggedin == true)
     {
 
@@ -29,8 +30,9 @@ class Login extends Component
     }
 
   }
-    
+
   componentDidMount(){
+    console.log(this.props,'props data')
     if(localStorage.getItem("token")){
       this.props.history.push("/users")
     }
@@ -53,7 +55,7 @@ class Login extends Component
       let fields = this.state.fields;
       let errors = {};
       let formIsValid = true;
-      
+
       //Email
       if(!fields["email"]){
          formIsValid = false;
@@ -76,7 +78,7 @@ class Login extends Component
          errors["password"] = "Password field is required";
       }
 
-          
+
     this.setState({errors: errors});
     return formIsValid;
 
@@ -86,14 +88,14 @@ class Login extends Component
   handlelogin(event)
   {
 	  event.preventDefault();
-  	let fields = this.state.fields; 	
+  	let fields = this.state.fields;
     if(this.handleValidation())
     {
       this.props.login_user(fields);
 
-    }      
-  } 
-  
+    }
+  }
+
   render() {
     return (
     <div>
@@ -113,7 +115,7 @@ class Login extends Component
           </div>
 			    <button type="submit" className="btn btn-default">Login</button>
 		    </form>
-		</div>  
+		</div>
 	</div>
 
     );
@@ -121,7 +123,7 @@ class Login extends Component
 }
 
 function mapStateToProps(state){
-  
+
 	return {
 	    users:state.usersReducer,
 	    loginReducer: state.loginReducer,
@@ -133,7 +135,7 @@ export default withRouter(connect(mapStateToProps,{login_user})(Login));
 // export default  withRouter (connect((state) => {
 //   const users = state.usersReducer
 //   const loginReducer = state.loginReducer
-  
+
 //   return {
 //       users,loginReducer
 //   };

@@ -82,6 +82,7 @@ class EditUser extends Component
 
   componentDidMount()
   {
+    console.log(this.props,'propsssssssss')
 
   if(this.props.loginReducer.isloggedin == true)
     {
@@ -960,7 +961,7 @@ dynamictextChange(name,value)
 
   displaysubmenus(index)
   {
-    console.log(this.state.documents1,'asssssss')
+    console.log(this.state.documents1,'from registerasssssss')
     let documents1 = this.state.documents1.map((valueslist,sindex) => {
       console.log(sindex,'sindex')
       if(valueslist['props'])
@@ -984,7 +985,7 @@ dynamictextChange(name,value)
           console.log(lastindex,'lastinds')
           console.log(sindex,'sindexxxxxxxx')
           let totalindex = sindex
-          let name = `submenu1-${totalindex}`
+          let name = `submenu11-${totalindex}`
           return (<DocumentInput  index={ sindex } removeElement={this.removeElement}  addElement={this.addElement}
                                   dynamictextChange ={this.dynamictextChange} name={name}  />)
 
@@ -1013,7 +1014,7 @@ dynamictextChange(name,value)
 
         let totalindex=sindex
         console.log(totalindex,'totalindexxxxx')
-        let name = `submenu2-${totalindex}`
+        let name = `submenu22-${totalindex}`
         return (<DocumentInput  index={ sindex } removeElement={this.removeElement}  addElement={this.addElement}
                    dynamictextChange ={this.dynamictextChange}  name={name}/>)
 
@@ -1039,7 +1040,7 @@ dynamictextChange(name,value)
         let totalindex=sindex
         console.log(totalindex,'totalindexxxxx')
 
-        let name = `submenu3-${totalindex}`
+        let name = `submenu33-${totalindex}`
         return (<DocumentInput  index={ sindex } removeElement={this.removeElement}  addElement={this.addElement}
                    dynamictextChange ={this.dynamictextChange} name={name}/>)
       }

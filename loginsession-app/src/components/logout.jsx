@@ -4,7 +4,7 @@ import {withRouter} from 'react-router-dom';
 import { connect } from "react-redux";
 
 
-class Logout extends Component 
+class Logout extends Component
 {
 
   componentDidMount()
@@ -23,6 +23,5 @@ class Logout extends Component
     );
   }
 }
- 
-export default Logout;
 
+export default Logout;
