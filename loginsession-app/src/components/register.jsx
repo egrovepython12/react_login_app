@@ -51,9 +51,6 @@ class Register extends Component
       },
       elements: menus,
       documentslist:[],
-      documents1:[],
-      documents2:[],
-      documents3:[],
       inputValues1:{},
       inputValues2:{},
       inputValues3:{},
@@ -503,22 +500,19 @@ class Register extends Component
       let b=a.parentNode
       let c=b.parentNode
       let target_id=c.id
+      let arr = this.state.documentslist;
+      let documents;
+      let obj = arr.find((o, i) => {
+          if(target_id == i)
+          {
+            documents = this.state.documentslist[i].value.concat(DocumentInput);
+            arr[i].value = documents
+          }
+     });
 
-      if(target_id==="Menu1_lists")
-      {
-        const documents1 = this.state.documents1.concat(DocumentInput);
-        this.setState({documents1: documents1});
-      }
-      if(target_id==="Menu2_lists")
-      {
-        const documents2 = this.state.documents2.concat(DocumentInput);
-        this.setState({documents2: documents2});
-      }
-      if(target_id==="Menu3_lists")
-      {
-        const documents3 = this.state.documents3.concat(DocumentInput);
-        this.setState({documents3: documents3});
-      }
+     this.setState({
+         documentslist: update(arr,{$set:arr})
+     });
 
    }
 
@@ -703,24 +697,20 @@ class Register extends Component
 
   dynamictextbox_creation(index)
   {
-    console.log(this.state.documentslist,'docuemntsssssslist')
-    const doc_name_test = `documents-${index}`
     let arr = this.state.documentslist;
-    let documents =''
+    let documents;
     let obj = arr.find((o, i) => {
-      if(index ==i)
-      {
-        documents = this.state.documentslist[i].value.map((Element, index) => {
-              const name = `submenu-${arr[i].name}-${index}`
-              console.log(name,'naem valuee')
-              return <Element ref={'Element-'+index} key={ index } index={ index } removeElement={this.removeElement}
-               addElement={this.addElement}  name={name} dynamictextChange ={this.dynamictextChange}/>
+        if(index ==i)
+        {
+          documents = this.state.documentslist[i].value.map((Element, index) =>{
+                const name = `submenu-${arr[i].name}-${index}`
+                return <Element ref={'Element-'+index} key={ index } index={ index } removeElement={this.removeElement}
+                 addElement={this.addElement}  name={name} dynamictextChange ={this.dynamictextChange}/>
+             });
+        }
+   });
+   return documents
 
-       })
-       console.log(documents,'documentssssss value')
-       return documents
-     }
-    })
   }
 
   render() {
@@ -769,7 +759,8 @@ class Register extends Component
               {this.state.elements.map((item, i) =>
                 <li key={i}>
                   <input type="checkbox" name="menus" onClick={(e)=>this.updateStateList(e,item,i)} id={item.text} />   {item.text}
-                  {item.checked?<div ref={item.text+'_lists'} id={item.text+'_lists'} name={item.text+'_submenus'}>{this.dynamictextbox_creation(i)}
+                  {item.checked?<div ref={item.text} id={i} name={item.text+'_submenus'}>
+                    {this.dynamictextbox_creation(i)}
                   <span style={{color: "red"}}>
                     {this.state.errors[item.text+'_submenus']}</span></div>:<div></div>}
                 </li>
@@ -795,14 +786,3 @@ function mapStateToProps(state){
   }
 }
 export default withRouter(connect(mapStateToProps,{register_user})(Register));
-
-
-// export default withRouter(connect((state) => {
-//   const registerReducer = state.registerReducer
-//   const users = state.usersReducer
-
-//   return {
-//     registerReducer, users
-//   };
-
-// })(Register));
